@@ -6,6 +6,7 @@ import {
     Param,
     Post,
     Put,
+    Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
@@ -22,6 +23,7 @@ import { ErrorHandlerService } from '../../error-handler/error-handler.service';
 import { ProductError } from '../errors/product.error';
 import { ProductService } from '../services/product.service';
 import { ObjectIdParamDto } from '../../common/object-id-param.dto';
+import { ListQueryDto } from '../../common/list-query.dto';
 
 @ApiTags('Product')
 @Controller('products')
@@ -35,8 +37,8 @@ export class ProductController {
   @ApiOkResponse({
     type: ListStandardResponseFactory(GetProductListResponseDto),
   })
-  getList() {
-    return this.productService.getAll().catch((error) => {
+  getList(@Query() query:ListQueryDto) {
+    return this.productService.getAll(query).catch((error) => {
       this.errorHandlerService.getMessage(error);
     });
   }
