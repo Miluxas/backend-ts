@@ -662,8 +662,9 @@ async function initDb() {
   const passHash = await hash('123123');
   await queryRunner.query(`
   INSERT INTO user(id, createdAt, updatedAt, deletedAt, firstName, lastName, email,password) VALUES 
-  ('1000','2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680',NULL,'superAdmin','superAdmin','admin@test.com','${passHash}'),
-  ('1001','2022-11-04 01:02:08.265533','2022-11-04 01:02:08.265533',NULL,'user','user','user@test.com','${passHash}');
+  ('1','2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680',NULL,'superAdmin','superAdmin','admin@test.com','${passHash}'),
+  ('2','2022-11-04 01:02:08.265533','2022-11-04 01:02:08.265533',NULL,'user','user','user@test.com','${passHash}'),
+  ('2','2022-11-04 01:02:08.265533','2022-11-04 01:02:08.265533',NULL,'user2','user2','user2@test.com','${passHash}');
   `);
   await queryRunner.query(`
   INSERT INTO warehouse(id, createdAt, updatedAt, deletedAt, name) VALUES 
