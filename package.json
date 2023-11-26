@@ -14,6 +14,8 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "migration:generate": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:generate -d ./ormconfig.ts",
+    "migration:create": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:create ",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

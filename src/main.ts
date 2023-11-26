@@ -28,6 +28,6 @@ async function bootstrap() {
     SwaggerModule.setup('swagger', app, document);
     SwaggerModule.setup('/docs', app, document);
   }
-  await app.listen(3000);
+  await app.listen(+configService.get("PORT"), configService.get("HOST"));
 }
 bootstrap();
