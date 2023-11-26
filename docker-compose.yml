@@ -5,7 +5,6 @@ services:
       context: .
     depends_on:
       - app_mongo
-      - app_mysql
     env_file:
       - .env.docker
     ports:
@@ -20,19 +19,6 @@ services:
     volumes:
       - app_mongo:/var/lib/mongo
   
-  app_mysql:
-    image: mysql:latest
-    restart: always
-    environment:
-      - MYSQL_DATABASE=${DB_DATABASE}
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-    ports:
-      - 3308:3306
-    volumes:
-      - app_mysql:/var/lib/mysql
-  
 volumes:
   app_mongo:
-    driver: local
-  app_mysql:
     driver: local

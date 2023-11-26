@@ -2,8 +2,9 @@ FROM node:20.9.0 As builder
 WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN yarn config set disable-self-update-check true
-RUN yarn install
 COPY . .
+RUN rm -r ./node_modules
+RUN yarn install
 RUN yarn build
 
 FROM node:20.9.0 As runner
