@@ -1,5 +1,6 @@
 import { Column, Entity } from 'typeorm';
 import { BaseModel } from './base-model';
+import { Role } from '../types/role.type';
 
 @Entity()
 export class User extends BaseModel {
@@ -32,4 +33,7 @@ export class User extends BaseModel {
 
   @Column({ nullable: true, select: false })
   refreshToken?: string;
+
+  @Column('simple-array')
+  roles:Role[];
 }
