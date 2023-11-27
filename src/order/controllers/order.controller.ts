@@ -11,9 +11,11 @@ import {
 import { OrderError } from '../errors';
 import { OrderService } from '../services/order.service';
 import { IdParamDto } from '../../common/id-param.dto';
+import { Authorization } from '../../common/authorization.decorator';
 
 @ApiTags('Order')
 @Controller('orders')
+@Authorization()
 export class OrderController {
   constructor(
     private readonly orderService: OrderService,

@@ -21,11 +21,10 @@ const permissions: {
       url: '/auth/change-password',
       desc: 'The user changes his/her password',
     },
-    { method: 'POST', url: '/medias', desc: 'user add media' },
+    { method: 'POST', url: '/medias', desc: 'The user adds media' },
+    { method: '*', url: '/orders/*', desc: 'The user manage orders' },
   ],
-  Admin: [
-    { method: '*', url: '/*', desc: 'The admin has fully permission' },
-  ],
+  Admin: [{ method: '*', url: '/*', desc: 'The admin has fully permission' }],
 };
 @Injectable()
 export class RBACService {

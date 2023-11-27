@@ -38,6 +38,7 @@ let skuQuantity;
   it(' User register order ', async () => {
     return agent(app.getHttpServer())
       .post(`/orders/register`)
+      .set('Authorization', `Bearer ${userToken}`)
       .send({items:[{sku:'654a299fae38d86c5c0b7903',count:3}]})
       .expect(201)
       .then((result) => {
