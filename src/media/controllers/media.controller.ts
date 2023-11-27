@@ -22,6 +22,7 @@ import { GetMediaDetailResponseDto } from '../DTOs';
 import { INewMedia } from '../interfaces';
 import { MediaService } from '../services/media.service';
 import { MediaAcceptableMimeTypes, MediaType, mediaExtensions } from '../types';
+import { Authorization } from '../../common/authorization.decorator';
 
 export const LOCAL_PATH = join(__dirname, '../', '../', 'uploaded-files');
 const s3Path = 'images';
@@ -36,7 +37,7 @@ export class MediaController {
   }
 
   @Post()
-  // @Authorization()
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(GetMediaDetailResponseDto),
   })

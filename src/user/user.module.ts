@@ -30,6 +30,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     }),
   ],
   controllers: [UserController, AuthController],
-  providers: [UserService, AuthService, JwtStrategy,RBACService],
+  providers: [UserService, AuthService, JwtStrategy, RBACService],
+  exports: [RBACService],
 })
 export class UserModule {}

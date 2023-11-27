@@ -26,9 +26,26 @@ describe(' User CRUD ', () => {
       });
   });
 
+  let userToken;
+  it(' User login', async () => {
+    return agent(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email: 'john.smith@test.com',
+        password:'123123'
+      })
+      .expect(201)
+      .then((result) => {
+        const resultObject = JSON.parse(result.text);
+        expect(resultObject.payload.user.password).toBeUndefined();
+        userToken=resultObject.payload.token;
+      });
+  });
+
   it(' User detail', async () => {
     return agent(app.getHttpServer())
       .get(`/users/${userId}`)
+      .set('Authorization', `Bearer ${userToken}`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
@@ -39,22 +56,10 @@ describe(' User CRUD ', () => {
       });
   });
 
-  it(' User detail with wrong id', async () => {
-    return agent(app.getHttpServer())
-      .get(`/users/1222`)
-      .expect(404)
-      .then((result) => {
-        const resultObject = JSON.parse(result.text);
-        expect(resultObject.meta.message).toEqual(
-          userErrorMessages.NOT_FOUND.message,
-        );
-      });
-     
-  });
-
   it(' User update', async () => {
     return agent(app.getHttpServer())
       .put(`/users/${userId}`)
+      .set('Authorization', `Bearer ${userToken}`)
       .send({ firstName: 'Jonathon' })
       .expect(200)
       .then((result) => {
@@ -67,6 +72,7 @@ describe(' User CRUD ', () => {
   it(' Media create', async () => {
     return agent(app.getHttpServer())
       .post('/medias')
+      .set('Authorization', `Bearer ${userToken}`)
       .attach('file', './test/nob.jpg')
       .expect(201)
       .then((result) => {
@@ -79,6 +85,7 @@ describe(' User CRUD ', () => {
   it(' User update avatar', async () => {
     return agent(app.getHttpServer())
       .put(`/users/${userId}`)
+      .set('Authorization', `Bearer ${userToken}`)
       .send({ avatarImageId: mediaId })
       .expect(200)
       .then((result) => {

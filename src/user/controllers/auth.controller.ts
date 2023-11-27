@@ -5,8 +5,9 @@ import { StandardResponseFactory } from '../../interceptors/formatter/standard-r
 import { ChangePasswordBodyDto, GetUserDetailResponseDto, LoginBodyDto } from '../DTOs';
 import { AuthError } from '../errors';
 import { AuthService } from '../services/auth.service';
-import { Authorization } from '../decorators/authorization.decorator';
 import { AuthorizedRequestType } from '../types/authorized-request.type';
+import { Public } from '../../common/public.decorator';
+import { Authorization } from '../../common/authorization.decorator';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -17,6 +18,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
+  @Public()
   @ApiCreatedResponse({
     type: StandardResponseFactory(GetUserDetailResponseDto),
   })

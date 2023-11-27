@@ -6,7 +6,10 @@ const permissions: {
   [K in Role]: { method: string; url: string; desc?: string }[];
 } = {
   User: [
-    { method: 'PUT', url: '/users/:userId', desc: 'user edit itself info' },
+    { method: 'PUT', url: '/users/:userId', desc: 'The user edits his/her info' },
+    { method: 'GET', url: '/users/:userId', desc: 'The user gets his/her info' },
+    { method: 'PUT', url: '/auth/change-password', desc: 'The user changes his/her password' },
+    { method: 'POST', url: '/medias', desc: 'user add media' },
   ],
   Admin: [{ method: '*', url: '/*', desc: 'admin has fully permission' }],
 };

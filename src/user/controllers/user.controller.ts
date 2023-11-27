@@ -22,11 +22,11 @@ import { ErrorHandlerService } from '../../error-handler/error-handler.service';
 import { UserError } from '../errors/user.error';
 import { UserService } from '../services/user.service';
 import { IdParamDto } from '../../common/id-param.dto';
-import { Authorization } from '../decorators/authorization.decorator';
+import { Authorization } from '../../common/authorization.decorator';
+import { Public } from '../../common/public.decorator';
 
 @ApiTags('User')
 @Controller('users')
-@Authorization()
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -34,6 +34,7 @@ export class UserController {
   ) {}
   
   @Get(':id')
+  @Authorization()
   @ApiOkResponse({
     type: StandardResponseFactory(GetUserDetailResponseDto),
   })
@@ -44,6 +45,7 @@ export class UserController {
   }
 
   @Post()
+  @Public()
   @ApiCreatedResponse({
     type: StandardResponseFactory(GetUserDetailResponseDto),
   })
@@ -54,6 +56,7 @@ export class UserController {
   }
 
   @Put(':id')
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(GetUserDetailResponseDto),
   })

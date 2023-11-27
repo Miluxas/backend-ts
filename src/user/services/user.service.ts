@@ -22,6 +22,7 @@ export class UserService {
     user.lastName = newUser.lastName;
     user.email = newUser.email;
     user.password = await this.hashPassword(newUser.password);
+    user.roles=['User']
 
     if (newUser.avatarImageId) {
       await this.mediaService.getMedia(newUser.avatarImageId).then((media) => {
