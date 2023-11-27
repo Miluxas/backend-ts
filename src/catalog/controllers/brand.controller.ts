@@ -22,6 +22,7 @@ import { ErrorHandlerService } from '../../error-handler/error-handler.service';
 import { BrandError } from '../errors/brand.error';
 import { BrandService } from '../services/brand.service';
 import { ObjectIdParamDto } from '../../common/object-id-param.dto';
+import { Public } from '../../common/public.decorator';
 
 @ApiTags('Brand')
 @Controller('brands')
@@ -32,6 +33,7 @@ export class BrandController {
   ) {}
 
   @Get()
+  @Public()
   @ApiOkResponse({
     type: ListStandardResponseFactory(GetBrandListResponseDto),
   })
@@ -42,6 +44,7 @@ export class BrandController {
   }
 
   @Get(':_id')
+  @Public()
   @ApiOkResponse({
     type: StandardResponseFactory(GetBrandDetailResponseDto),
   })
