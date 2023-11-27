@@ -5,12 +5,30 @@ describe(' Product CRUD ', () => {
   beforeAll(baseBeforeAll);
 
   afterAll(baseAfterAll);
+  
+  let adminToken;
+  it(' Admin login', async () => {
+    return agent(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email: 'admin@test.com',
+        password:'123123'
+      })
+      .expect(201)
+      .then((result) => {
+        const resultObject = JSON.parse(result.text);
+        expect(resultObject.payload.user.firstName).toEqual('superAdmin');
+        expect(resultObject.payload.user.password).toBeUndefined();
+        adminToken=resultObject.payload.token;
+      });
+  });
 
   let productId
   it(' Product create', async () => {
     return (
       agent(app.getHttpServer())
         .post('/products')
+        .set('Authorization', `Bearer ${adminToken}`)
         .send({
           name: 'product test',
           description: 'description of product test',
@@ -105,6 +123,7 @@ describe(' Product CRUD ', () => {
   it(' Brand update', async () => {
     return agent(app.getHttpServer())
       .put('/brands/626955e809a5665331a6d073')
+      .set('Authorization', `Bearer ${adminToken}`)
       .send({ title: 'Updated Adidas title' })
       .expect(200)
       .then((result) => {
@@ -129,6 +148,7 @@ describe(' Product CRUD ', () => {
   it(' Category update', async () => {
     return agent(app.getHttpServer())
       .put('/categories/6278dfae51749313a02d5452')
+      .set('Authorization', `Bearer ${adminToken}`)
       .send({ title: 'Running' })
       .expect(200)
       .then((result) => {

@@ -24,6 +24,8 @@ import { ProductError } from '../errors/product.error';
 import { ProductService } from '../services/product.service';
 import { ObjectIdParamDto } from '../../common/object-id-param.dto';
 import { ListQueryDto } from '../../common/list-query.dto';
+import { Authorization } from '../../common/authorization.decorator';
+import { Public } from '../../common/public.decorator';
 
 @ApiTags('Product')
 @Controller('products')
@@ -34,6 +36,7 @@ export class ProductController {
   ) {}
 
   @Get()
+  @Public()
   @ApiOkResponse({
     type: ListStandardResponseFactory(GetProductListResponseDto),
   })
@@ -44,6 +47,7 @@ export class ProductController {
   }
 
   @Get(':_id')
+  @Public()
   @ApiOkResponse({
     type: StandardResponseFactory(GetProductDetailResponseDto),
   })
@@ -54,6 +58,7 @@ export class ProductController {
   }
 
   @Post()
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(GetProductDetailResponseDto),
   })
@@ -64,6 +69,7 @@ export class ProductController {
   }
 
   @Put(':_id')
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(GetProductDetailResponseDto),
   })
@@ -77,6 +83,7 @@ export class ProductController {
   }
 
   @Delete(':_id')
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(Boolean),
   })

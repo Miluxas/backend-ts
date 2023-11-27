@@ -6,10 +6,28 @@ describe(' Product CRUD ', () => {
 
   afterAll(baseAfterAll);
 
+  let adminToken;
+  it(' Admin login', async () => {
+    return agent(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email: 'admin@test.com',
+        password:'123123'
+      })
+      .expect(201)
+      .then((result) => {
+        const resultObject = JSON.parse(result.text);
+        expect(resultObject.payload.user.firstName).toEqual('superAdmin');
+        expect(resultObject.payload.user.password).toBeUndefined();
+        adminToken=resultObject.payload.token;
+      });
+  });
+
   let mediaId;
   it(' Media create', async () => {
     return agent(app.getHttpServer())
       .post('/medias')
+      .set('Authorization', `Bearer ${adminToken}`)
       .attach('file', './test/nob.jpg')
       .expect(201)
       .then((result) => {
@@ -24,6 +42,7 @@ describe(' Product CRUD ', () => {
   it(' Product create', async () => {
     return agent(app.getHttpServer())
       .post('/products')
+      .set('Authorization', `Bearer ${adminToken}`)
       .send({
         name: 'product test',
         description: 'description of product test',
@@ -119,6 +138,7 @@ describe(' Product CRUD ', () => {
   it(' Product update', async () => {
     return agent(app.getHttpServer())
       .put(`/products/${productId}`)
+      .set('Authorization', `Bearer ${adminToken}`)
       .send({
         name: 'product test',
         description: 'description of product test',

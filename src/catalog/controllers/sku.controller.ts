@@ -15,6 +15,7 @@ import { ProductError } from '../errors/product.error';
 import { ProductService } from '../services/product.service';
 import { SkuService } from '../services/sku.service';
 import { ObjectIdParamDto } from '../../common/object-id-param.dto';
+import { Public } from '../../common/public.decorator';
 
 @ApiTags('Sku')
 @Controller('skus')
@@ -25,6 +26,7 @@ export class SkuController {
   ) {}
 
   @Get(':_id')
+  @Public()
   @ApiOkResponse({
     type: StandardResponseFactory(SkuResponseDto),
   })
