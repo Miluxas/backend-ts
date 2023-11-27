@@ -22,6 +22,8 @@ import { ErrorHandlerService } from '../../error-handler/error-handler.service';
 import { VariableTypeError } from '../errors/variable-type.error';
 import { VariableTypeService } from '../services/variable-type.service';
 import { ObjectIdParamDto } from '../../common/object-id-param.dto';
+import { Authorization } from '../../common/authorization.decorator';
+import { Public } from '../../common/public.decorator';
 
 @ApiTags('VariableType')
 @Controller('variable-types')
@@ -32,6 +34,7 @@ export class VariableTypeController {
   ) {}
 
   @Get()
+  @Public()
   @ApiOkResponse({
     type: ListStandardResponseFactory(GetVariableTypeListResponseDto),
   })
@@ -42,6 +45,7 @@ export class VariableTypeController {
   }
 
   @Get(':_id')
+  @Public()
   @ApiOkResponse({
     type: StandardResponseFactory(GetVariableTypeDetailResponseDto),
   })
@@ -52,6 +56,7 @@ export class VariableTypeController {
   }
 
   @Post()
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(GetVariableTypeDetailResponseDto),
   })
@@ -62,6 +67,7 @@ export class VariableTypeController {
   }
 
   @Put(':_id')
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(GetVariableTypeDetailResponseDto),
   })
@@ -75,6 +81,7 @@ export class VariableTypeController {
   }
 
   @Delete(':_id')
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(Boolean),
   })

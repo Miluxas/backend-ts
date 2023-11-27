@@ -7,11 +7,29 @@ describe(' Variable Type CRUD ', () => {
 
   afterAll(baseAfterAll);
 
+  let adminToken;
+  it(' Admin login', async () => {
+    return agent(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email: 'admin@test.com',
+        password:'123123'
+      })
+      .expect(201)
+      .then((result) => {
+        const resultObject = JSON.parse(result.text);
+        expect(resultObject.payload.user.firstName).toEqual('superAdmin');
+        expect(resultObject.payload.user.password).toBeUndefined();
+        adminToken=resultObject.payload.token;
+      });
+  });
+
   let variableTypeId;
   it(' Variable Type create', async () => {
     return (
       agent(app.getHttpServer())
         .post('/variable-types')
+        .set('Authorization', `Bearer ${adminToken}`)
         .send({
           title: 'color',
           values: [{ name: 'blue', value: '#10ee10' }],
@@ -31,7 +49,7 @@ describe(' Variable Type CRUD ', () => {
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload[0].title).toEqual('color');
+        expect(resultObject.payload[0].title).toEqual('Color');
       });
   });
 
@@ -48,6 +66,7 @@ describe(' Variable Type CRUD ', () => {
   it(' Variable Type update', async () => {
     return agent(app.getHttpServer())
       .put(`/variable-types/${variableTypeId}`)
+      .set('Authorization', `Bearer ${adminToken}`)
       .send({ title: 'Color',
     })
       .expect(200)
@@ -60,6 +79,7 @@ describe(' Variable Type CRUD ', () => {
   it(' Variable Type delete', async () => {
     return agent(app.getHttpServer())
       .delete(`/variable-types/${variableTypeId}`)
+      .set('Authorization', `Bearer ${adminToken}`)
       .expect(204);
   });
 
