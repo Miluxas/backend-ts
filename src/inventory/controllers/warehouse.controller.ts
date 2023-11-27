@@ -26,9 +26,11 @@ import { WarehouseError } from '../errors/warehouse.error';
 import { WarehouseService } from '../services/warehouse.service';
 import { IdParamDto } from '../../common/id-param.dto';
 import { ListQueryDto } from '../../common/list-query.dto';
+import { Authorization } from '../../common/authorization.decorator';
 
 @ApiTags('Warehouse')
 @Controller('warehouses')
+@Authorization()
 export class WarehouseController {
   constructor(
     private readonly warehouseService: WarehouseService,

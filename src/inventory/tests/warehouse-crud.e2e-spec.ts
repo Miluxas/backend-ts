@@ -7,9 +7,27 @@ describe(' Warehouse CRUD ', () => {
 
   afterAll(baseAfterAll);
 
+  let adminToken;
+  it(' Admin login', async () => {
+    return agent(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email: 'admin@test.com',
+        password:'123123'
+      })
+      .expect(201)
+      .then((result) => {
+        const resultObject = JSON.parse(result.text);
+        expect(resultObject.payload.user.firstName).toEqual('superAdmin');
+        expect(resultObject.payload.user.password).toBeUndefined();
+        adminToken=resultObject.payload.token;
+      });
+  });
+
   it(' Warehouse list', async () => {
     return agent(app.getHttpServer())
       .get('/warehouses')
+      .set('Authorization', `Bearer ${adminToken}`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
@@ -20,6 +38,7 @@ describe(' Warehouse CRUD ', () => {
   it(' Warehouse list by filter', async () => {
     return agent(app.getHttpServer())
       .get('/warehouses?search=th')
+      .set('Authorization', `Bearer ${adminToken}`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
@@ -30,6 +49,7 @@ describe(' Warehouse CRUD ', () => {
   it(' Warehouse detail', async () => {
     return agent(app.getHttpServer())
       .get('/warehouses/1')
+      .set('Authorization', `Bearer ${adminToken}`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
@@ -40,6 +60,7 @@ describe(' Warehouse CRUD ', () => {
   it(' Warehouse update', async () => {
     return agent(app.getHttpServer())
       .put('/warehouses/1')
+      .set('Authorization', `Bearer ${adminToken}`)
       .send({ name: 'Updated warehouse name' })
       .expect(200)
       .then((result) => {
@@ -51,6 +72,7 @@ describe(' Warehouse CRUD ', () => {
   it(' Warehouse create', async () => {
     return agent(app.getHttpServer())
       .post('/warehouses')
+      .set('Authorization', `Bearer ${adminToken}`)
       .send({ name: 'new warehouse name' })
       .expect(201)
       .then((result) => {
@@ -64,12 +86,14 @@ describe(' Warehouse CRUD ', () => {
   it(' Warehouse delete', async () => {
     return agent(app.getHttpServer())
       .delete('/warehouses/2')
+      .set('Authorization', `Bearer ${adminToken}`)
       .expect(204);
   });
 
   it(' Warehouse detail', async () => {
     return agent(app.getHttpServer())
       .get('/warehouses/2')
+      .set('Authorization', `Bearer ${adminToken}`)
       .expect(404)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
