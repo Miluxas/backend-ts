@@ -6,6 +6,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { RBACService } from '../services/rbac.service';
+import { IS_PUBLIC_KEY } from '../../common/public.decorator';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -14,6 +15,13 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (isPublic) {
+      return true;
+    }
     const baseGuardResult = await super.canActivate(context);
     if (!baseGuardResult) {
       throw new UnauthorizedException();
@@ -22,6 +30,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       .headers?.authorization;
     await this.tokenValidate(bearer);
     const { user, url, method } = context.switchToHttp().getRequest();
+
     return this.rBACService.checkAccess(user.roles, user.id, method, url);
   }
 
