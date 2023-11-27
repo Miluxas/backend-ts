@@ -22,9 +22,11 @@ import { ErrorHandlerService } from '../../error-handler/error-handler.service';
 import { UserError } from '../errors/user.error';
 import { UserService } from '../services/user.service';
 import { IdParamDto } from '../../common/id-param.dto';
+import { Authorization } from '../decorators/authorization.decorator';
 
 @ApiTags('User')
 @Controller('users')
+@Authorization()
 export class UserController {
   constructor(
     private readonly userService: UserService,

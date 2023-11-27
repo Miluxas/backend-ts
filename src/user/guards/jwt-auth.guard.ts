@@ -5,12 +5,11 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
+import { RBACService } from '../services/rbac.service';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-  constructor(
-    private reflector: Reflector,
-  ) {
+  constructor(private reflector: Reflector, private rBACService: RBACService) {
     super(reflector);
   }
 
@@ -22,7 +21,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const bearer: string = context.switchToHttp().getRequest()
       .headers?.authorization;
     await this.tokenValidate(bearer);
-    return true;
+    const { user, url, method } = context.switchToHttp().getRequest();
+    return this.rBACService.checkAccess(user.roles, user.id, method, url);
   }
 
   private async tokenValidate(bearer: string) {

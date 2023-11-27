@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ErrorHandlerModule } from '../error-handler/error-handler.module';
 import { MediaModule } from '../media/media.module';
 import { AuthController } from './controllers/auth.controller';
 import { UserController } from './controllers/user.controller';
 import { User } from './entities/user.entity';
-import { userErrorMessages, authErrorMessages } from './errors';
+import { authErrorMessages, userErrorMessages } from './errors';
 import { AuthService } from './services/auth.service';
+import { RBACService } from './services/rbac.service';
 import { UserService } from './services/user.service';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
@@ -29,6 +30,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     }),
   ],
   controllers: [UserController, AuthController],
-  providers: [UserService, AuthService, JwtStrategy],
+  providers: [UserService, AuthService, JwtStrategy,RBACService],
 })
 export class UserModule {}
