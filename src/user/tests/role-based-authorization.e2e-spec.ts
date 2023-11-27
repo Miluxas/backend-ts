@@ -31,13 +31,13 @@ describe(' Role base authorization ', () => {
     return agent(app.getHttpServer())
       .post('/auth/login')
       .send({
-        email: 'user@test.com',
+        email: 'user2@test.com',
         password:'123123'
       })
       .expect(201)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.user.firstName).toEqual('user');
+        expect(resultObject.payload.user.firstName).toEqual('user2');
         expect(resultObject.payload.user.password).toBeUndefined();
         secondUserToken=resultObject.payload.token;
         secondUserId = resultObject.payload.user.id;
@@ -55,7 +55,7 @@ describe(' Role base authorization ', () => {
       .expect(201)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.user.firstName).toEqual('admin');
+        expect(resultObject.payload.user.firstName).toEqual('superAdmin');
         expect(resultObject.payload.user.password).toBeUndefined();
         adminToken=resultObject.payload.token;
       });
@@ -63,48 +63,48 @@ describe(' Role base authorization ', () => {
 
   it(' User can edit his/her info', async () => {
     return agent(app.getHttpServer())
-      .put(`/user/${firstUserId}`)
+      .put(`/users/${firstUserId}`)
       .set('Authorization', `Bearer ${firstUserToken}`)
       .send({
-        name:'new name',
+        firstName:'new name',
       })
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.user.firstName).toEqual('new name');
+        expect(resultObject.payload.firstName).toEqual('new name');
       });
   });
 
   it(' User info dose NOT update without token', async () => {
     return agent(app.getHttpServer())
-      .put(`/user/${firstUserId}`)
+      .put(`/users/${firstUserId}`)
       .send({
-        name:'bad name',
+        firstName:'bad name',
       })
       .expect(401)
   });
 
   it(' User info dose NOT update with other user token', async () => {
     return agent(app.getHttpServer())
-      .put(`/user/${firstUserId}`)
+      .put(`/users/${firstUserId}`)
       .set('Authorization', `Bearer ${secondUserToken}`)
       .send({
-        name:'bad name',
+        firstName:'bad name',
       })
-      .expect(401)
+      .expect(403)
   });
 
   it(' Admin can edit user info', async () => {
     return agent(app.getHttpServer())
-      .put(`/user/${firstUserId}`)
+      .put(`/users/${firstUserId}`)
       .set('Authorization', `Bearer ${adminToken}`)
       .send({
-        name:'admin friendly name',
+        firstName:'admin friendly name',
       })
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.user.firstName).toEqual('admin friendly name');
+        expect(resultObject.payload.firstName).toEqual('admin friendly name');
       });
   });
 
