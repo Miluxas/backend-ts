@@ -27,9 +27,27 @@ describe(' Category CRUD ', () => {
       });
   });
 
+  let adminToken;
+  it(' Admin login', async () => {
+    return agent(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email: 'admin@test.com',
+        password:'123123'
+      })
+      .expect(201)
+      .then((result) => {
+        const resultObject = JSON.parse(result.text);
+        expect(resultObject.payload.user.firstName).toEqual('superAdmin');
+        expect(resultObject.payload.user.password).toBeUndefined();
+        adminToken=resultObject.payload.token;
+      });
+  });
+
   it(' Category update', async () => {
     return agent(app.getHttpServer())
       .put('/categories/626955e809a5665331a6d083')
+      .set('Authorization', `Bearer ${adminToken}`)
       .send({ title: 'Updated category title' })
       .expect(200)
       .then((result) => {
@@ -41,6 +59,7 @@ describe(' Category CRUD ', () => {
   it(' Category delete', async () => {
     return agent(app.getHttpServer())
       .delete('/categories/626955e809a5665331a6d083')
+      .set('Authorization', `Bearer ${adminToken}`)
       .expect(204);
   });
 

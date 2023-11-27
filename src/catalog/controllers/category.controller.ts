@@ -22,6 +22,8 @@ import { ErrorHandlerService } from '../../error-handler/error-handler.service';
 import { CategoryError } from '../errors/category.error';
 import { CategoryService } from '../services/category.service';
 import { ObjectIdParamDto } from '../../common/object-id-param.dto';
+import { Public } from '../../common/public.decorator';
+import { Authorization } from '../../common/authorization.decorator';
 
 @ApiTags('Category')
 @Controller('categories')
@@ -32,6 +34,7 @@ export class CategoryController {
   ) {}
 
   @Get()
+  @Public()
   @ApiOkResponse({
     type: ListStandardResponseFactory(GetCategoryListResponseDto),
   })
@@ -42,6 +45,7 @@ export class CategoryController {
   }
 
   @Get(':_id')
+  @Public()
   @ApiOkResponse({
     type: StandardResponseFactory(GetCategoryDetailResponseDto),
   })
@@ -52,6 +56,7 @@ export class CategoryController {
   }
 
   @Post()
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(GetCategoryDetailResponseDto),
   })
@@ -62,6 +67,7 @@ export class CategoryController {
   }
 
   @Put(':_id')
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(GetCategoryDetailResponseDto),
   })
@@ -75,6 +81,7 @@ export class CategoryController {
   }
 
   @Delete(':_id')
+  @Authorization()
   @ApiCreatedResponse({
     type: StandardResponseFactory(Boolean),
   })
