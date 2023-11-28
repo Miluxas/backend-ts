@@ -681,7 +681,7 @@ async function initDb() {
       attributes: [],
       skus: [
         {
-          _id: '654a299fae38d86c5c0b7902',
+          _id: '654a299fae38d86c5c0b8902',
           name: 'updated name',
           price: 100,
           quantity: 100,
@@ -757,7 +757,7 @@ async function initDb() {
           updatedAt: '2023-11-07T12:12:15.230Z',
         },
         {
-          _id: '654a299fae38d86c5c0b7903',
+          _id: '654a299fae38d86c5c0b8903',
           name: 'string',
           price: 50,
           quantity: 100,
@@ -833,7 +833,7 @@ async function initDb() {
           updatedAt: '2023-11-07T12:12:15.231Z',
         },
         {
-          _id: '654a299fae38d86c5c0b7904',
+          _id: '654a299fae38d86c5c0b8904',
           name: 'string',
           price: 110,
           quantity: 100,
@@ -909,7 +909,7 @@ async function initDb() {
           updatedAt: '2023-11-07T12:12:15.236Z',
         },
         {
-          _id: '654a299fae38d86c5c0b7905',
+          _id: '654a299fae38d86c5c0b8905',
           name: 'string',
           price: 130,
           quantity: 100,
@@ -984,7 +984,7 @@ async function initDb() {
           updatedAt: '2023-11-07T12:12:15.229Z',
         },
         {
-          _id: '654a299fae38d86c5c0b7915',
+          _id: '654a299fae38d86c5c0b8915',
           name: 'new sku',
           price: 90,
           quantity: 100,
