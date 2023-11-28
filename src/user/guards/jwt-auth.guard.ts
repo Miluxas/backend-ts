@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { RBACService } from '../services/rbac.service';
 import { IS_PUBLIC_KEY } from '../../common/public.decorator';
+import { RBACService } from '../services/rbac.service';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -30,8 +30,14 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       .headers?.authorization;
     await this.tokenValidate(bearer);
     const { user, url, method } = context.switchToHttp().getRequest();
-
-    return this.rBACService.checkAccess(user.roles, user.id, method, url);
+    const accessStatus = this.rBACService.checkAccess(
+      user.roles,
+      user.id,
+      method,
+      url,
+    );
+    context.switchToHttp().getRequest()['rbContent']=accessStatus.rbContent
+    return accessStatus.grant;
   }
 
   private async tokenValidate(bearer: string) {

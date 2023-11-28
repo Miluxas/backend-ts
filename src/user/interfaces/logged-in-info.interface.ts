@@ -1,4 +1,4 @@
-import { IUserInfo } from "./user-info.interface";
+import { IUserInfo } from "../../common/user-info.interface";
 
 export interface ILoggedInInfo {
   user: IUserInfo;

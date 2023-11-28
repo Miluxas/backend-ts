@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Role } from '../types/role.type';
 
 const permissions: {
-  [K in Role]: { method: string; url: string; desc?: string }[];
+  [K in Role]: { method: string; url: string; desc: string; rbContent?: any }[];
 } = {
   User: [
     {
@@ -22,7 +22,12 @@ const permissions: {
       desc: 'The user changes his/her password',
     },
     { method: 'POST', url: '/medias', desc: 'The user adds media' },
-    { method: '*', url: '/orders/*', desc: 'The user manage orders' },
+    {
+      method: '*',
+      url: '/orders*',
+      desc: 'The user manage orders',
+      rbContent: { userId: '$userId' },
+    },
   ],
   Admin: [{ method: '*', url: '/*', desc: 'The admin has fully permission' }],
 };
@@ -33,8 +38,8 @@ export class RBACService {
     userId: number,
     method: string,
     url: string,
-  ): boolean {
-    if (!roles || roles.length == 0) return false;
+  ): { grant: boolean; rbContent?: any } {
+    if (!roles || roles.length == 0) return { grant: false };
     const rolePermissions = roles.reduce((prev, curr) => {
       prev.push(...permissions[curr]);
       return prev;
@@ -45,7 +50,15 @@ export class RBACService {
         (p.url.replace(':userId', userId.toString()) == url ||
           url.startsWith(p.url.split('*')[0])),
     );
-
-    return permission != null;
+    if (permission && permission.rbContent) {
+      const rbContent = JSON.parse(
+        JSON.stringify(permission.rbContent).replace(
+          '"$userId"',
+          userId.toString(),
+        ),
+      );
+      return { grant: true, rbContent };
+    }
+    return { grant: permission != null };
   }
 }
