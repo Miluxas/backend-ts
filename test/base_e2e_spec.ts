@@ -655,8 +655,8 @@ async function initDb() {
     },
     {
       _id: '654a299fae38d86c5c0b7910',
-      name: 'product test 2',
-      description: 'description of product test',
+      name: 'product test 2 nfound',
+      description: 'description of product test dfound',
       brand: {
         title: 'Updated brand title',
         _id: '626955e809a5665331a6d073',

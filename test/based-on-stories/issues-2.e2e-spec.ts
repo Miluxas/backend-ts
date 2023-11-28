@@ -1,7 +1,7 @@
 import { agent } from 'supertest';
 import { app, baseAfterAll, baseBeforeAll } from '../../test/base_e2e_spec';
 
-describe(' Role base authorization ', () => {
+describe(' Issue number 2 ', () => {
   beforeAll(baseBeforeAll);
 
   afterAll(baseAfterAll);
