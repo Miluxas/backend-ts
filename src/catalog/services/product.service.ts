@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types, now } from 'mongoose';
+import { ListQuery } from '../../common/list-query.type';
+import { PaginatedList } from '../../common/paginated-list.type';
 import { MediaService } from '../../media/services/media.service';
+import { PaginationService } from '../../pagination/pagination.service';
 import { ProductError } from '../errors/product.error';
 import { INewProduct, ISku, IUpdatedProduct } from '../interfaces';
 import { Brand, BrandDocument } from '../models/brand.model';
@@ -11,9 +14,6 @@ import {
   VariableType,
   VariableTypeDocument,
 } from '../models/variable-type.model';
-import { ListQuery } from '../../common/list-query.type';
-import { PaginatedList } from '../../common/paginated-list.type';
-import { PaginationService } from '../../pagination/pagination.service';
 
 @Injectable()
 export class ProductService {
@@ -30,10 +30,12 @@ export class ProductService {
     private readonly paginationService: PaginationService,
   ) {}
 
-  public async getAll(
-    query: ListQuery,
-  ): Promise<PaginatedList<any>> {
-    return this.paginationService.addPaginateToAggregate<Product>(this.productModel.aggregate(), query,{});
+  public async getAll(query: ListQuery): Promise<PaginatedList<any>> {
+    return this.paginationService.addPaginateToAggregate<Product>(
+      this.productModel.aggregate(),
+      query,
+      { textSearchFields: ['name', 'description'] },
+    );
   }
 
   public async getById(_id: string): Promise<Product> {

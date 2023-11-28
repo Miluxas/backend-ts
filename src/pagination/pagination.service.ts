@@ -91,6 +91,19 @@ export class PaginationService {
     skip = skip ?? 0;
     const completeOptions = new FindAndPaginateOptions<T>();
     Object.assign(completeOptions, options);
+    if (
+      search &&
+      search.length > 0 &&
+      completeOptions.textSearchFields &&
+      completeOptions.textSearchFields.length > 0
+    ) {
+      const reg = new RegExp('.*' + search + '.*');
+      Object.assign(filter, {
+        $or: completeOptions.textSearchFields.map((field) => ({
+          [field]: reg,
+        })),
+      });
+    }
     aggregate.match(filter);
     aggregate.facet({
       count: [{ $count: 'totalCount' }],
