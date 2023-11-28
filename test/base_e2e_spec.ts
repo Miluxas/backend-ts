@@ -235,427 +235,838 @@ async function initDb() {
         ],
       },
     ]);
-    const productsBulk=[
-      {
-        _id: '654a299fae38d86c5c0b790e',
-        name: 'product test',
-        description: 'description of product test',
-        brand: {
-          title: 'Updated brand title',
-          _id: '626955e809a5665331a6d073',
-          createdAt: '2023-11-07T12:12:22.290Z',
-          updatedAt: '2023-11-07T12:12:22.290Z',
-        },
-        categories: [
-          {
-            _id: '6278dfae51749313a02d5452',
-            title: 'Running',
-            createdAt: '2023-11-07T12:12:20.453Z',
-  
-            updatedAt: '2023-11-07T12:12:20.683Z',
-          },
-          {
-            _id: '6278dfa351749313a02d544c',
-            title: 'Spreadable Cheese, Parmesan With Garlic & Herbs',
-            createdAt: '2023-11-07T12:12:14.984Z',
-            updatedAt: '2023-11-07T12:12:14.984Z',
-          },
-        ],
-        images: [
-          {
-            id: '654a299fae38d86c5c0b78fb',
-            url: 'fake-url',
-            size: 8275,
-          },
-        ],
-        attributes: [],
-        skus: [
-          {
-            _id: '654a299fae38d86c5c0b7902',
-            name: 'updated name',
-            price: 100,
-            quantity: 100,
-            variants: [
-              {
-                title: 'Back Color',
-                value: {
-                  name: 'blue',
-                  value: '#1010ee',
-                },
-                type: {
-                  _id: '626955e809a5665331a6d453',
-                  title: 'Color',
-                  values: [
-                    {
-                      name: 'blue',
-                      value: '#1010ee',
-                    },
-                    {
-                      name: 'red',
-                      value: '#ee1010',
-                    },
-                    {
-                      name: 'green',
-                      value: '#10ee10',
-                    },
-                  ],
-                  createdAt: '2023-11-07T12:12:15.025Z',
-                  updatedAt: '2023-11-07T12:12:15.025Z',
-                },
-              },
-              {
-                title: 'Size',
-                value: {
-                  name: 'L',
-                  value: 'L',
-                },
-                type: {
-                  _id: '6252a2e5856d55aeb128e454',
-                  title: 'Size',
-                  values: [
-                    {
-                      name: 'S',
-                      value: 'S',
-                    },
-                    {
-                      name: 'M',
-                      value: 'M',
-                    },
-                    {
-                      name: 'L',
-                      value: 'L',
-                    },
-                    {
-                      name: 'XL',
-                      value: 'XL',
-                    },
-                  ],
-                  createdAt: '2023-11-07T12:12:15.025Z',
-                  updatedAt: '2023-11-07T12:12:15.025Z',
-                },
-              },
-            ],
-            images: [
-              {
-                id: '654a299fae38d86c5c0b78fb',
-                url: 'fake-url',
-                size: 8275,
-              },
-            ],
-            createdAt: '2023-11-07T12:12:15.230Z',
-  
-            updatedAt: '2023-11-07T12:12:15.230Z',
-          },
-          {
-            _id: '654a299fae38d86c5c0b7903',
-            name: 'string',
-            price: 50,
-            quantity: 100,
-            variants: [
-              {
-                title: 'Back Color',
-                value: {
-                  name: 'red',
-                  value: '#ee1010',
-                },
-                type: {
-                  _id: '626955e809a5665331a6d453',
-                  title: 'Color',
-                  values: [
-                    {
-                      name: 'blue',
-                      value: '#1010ee',
-                    },
-                    {
-                      name: 'red',
-                      value: '#ee1010',
-                    },
-                    {
-                      name: 'green',
-                      value: '#10ee10',
-                    },
-                  ],
-                  createdAt: '2023-11-07T12:12:15.025Z',
-                  updatedAt: '2023-11-07T12:12:15.025Z',
-                },
-              },
-              {
-                title: 'Size',
-                value: {
-                  name: 'L',
-                  value: 'L',
-                },
-                type: {
-                  _id: '6252a2e5856d55aeb128e454',
-                  title: 'Size',
-                  values: [
-                    {
-                      name: 'S',
-                      value: 'S',
-                    },
-                    {
-                      name: 'M',
-                      value: 'M',
-                    },
-                    {
-                      name: 'L',
-                      value: 'L',
-                    },
-                    {
-                      name: 'XL',
-                      value: 'XL',
-                    },
-                  ],
-                  createdAt: '2023-11-07T12:12:15.025Z',
-                  updatedAt: '2023-11-07T12:12:15.025Z',
-                },
-              },
-            ],
-            images: [
-              {
-                id: '654a299fae38d86c5c0b78fb',
-                url: 'fake-url',
-                size: 8275,
-              },
-            ],
-            createdAt: '2023-11-07T12:12:15.231Z',
-  
-            updatedAt: '2023-11-07T12:12:15.231Z',
-          },
-          {
-            _id: '654a299fae38d86c5c0b7904',
-            name: 'string',
-            price: 110,
-            quantity: 100,
-            variants: [
-              {
-                title: 'Back Color',
-                value: {
-                  name: 'blue',
-                  value: '#1010ee',
-                },
-                type: {
-                  _id: '626955e809a5665331a6d453',
-                  title: 'Color',
-                  values: [
-                    {
-                      name: 'blue',
-                      value: '#1010ee',
-                    },
-                    {
-                      name: 'red',
-                      value: '#ee1010',
-                    },
-                    {
-                      name: 'green',
-                      value: '#10ee10',
-                    },
-                  ],
-                  createdAt: '2023-11-07T12:12:15.025Z',
-                  updatedAt: '2023-11-07T12:12:15.025Z',
-                },
-              },
-              {
-                title: 'Size',
-                value: {
-                  name: 'XL',
-                  value: 'XL',
-                },
-                type: {
-                  _id: '6252a2e5856d55aeb128e454',
-                  title: 'Size',
-                  values: [
-                    {
-                      name: 'S',
-                      value: 'S',
-                    },
-                    {
-                      name: 'M',
-                      value: 'M',
-                    },
-                    {
-                      name: 'L',
-                      value: 'L',
-                    },
-                    {
-                      name: 'XL',
-                      value: 'XL',
-                    },
-                  ],
-                  createdAt: '2023-11-07T12:12:15.025Z',
-                  updatedAt: '2023-11-07T12:12:15.025Z',
-                },
-              },
-            ],
-            images: [
-              {
-                id: '654a299fae38d86c5c0b78fb',
-                url: 'fake-url',
-                size: 8275,
-              },
-            ],
-            createdAt: '2023-11-07T12:12:15.236Z',
-  
-            updatedAt: '2023-11-07T12:12:15.236Z',
-          },
-          {
-            _id: '654a299fae38d86c5c0b7905',
-            name: 'string',
-            price: 130,
-            quantity: 100,
-            variants: [
-              {
-                title: 'Back Color',
-                value: {
-                  name: 'red',
-                  value: '#ee1010',
-                },
-                type: {
-                  _id: '626955e809a5665331a6d453',
-                  title: 'Color',
-                  values: [
-                    {
-                      name: 'blue',
-                      value: '#1010ee',
-                    },
-                    {
-                      name: 'red',
-                      value: '#ee1010',
-                    },
-                    {
-                      name: 'green',
-                      value: '#10ee10',
-                    },
-                  ],
-                  createdAt: '2023-11-07T12:12:15.025Z',
-                  updatedAt: '2023-11-07T12:12:15.025Z',
-                },
-              },
-              {
-                title: 'Size',
-                value: {
-                  name: 'XL',
-                  value: 'XL',
-                },
-                type: {
-                  _id: '6252a2e5856d55aeb128e454',
-                  title: 'Size',
-                  values: [
-                    {
-                      name: 'S',
-                      value: 'S',
-                    },
-                    {
-                      name: 'M',
-                      value: 'M',
-                    },
-                    {
-                      name: 'L',
-                      value: 'L',
-                    },
-                    {
-                      name: 'XL',
-                      value: 'XL',
-                    },
-                  ],
-                  createdAt: '2023-11-07T12:12:15.025Z',
-                  updatedAt: '2023-11-07T12:12:15.025Z',
-                },
-              },
-            ],
-            images: [
-              {
-                id: '654a299fae38d86c5c0b78fb',
-                url: 'fake-url',
-                size: 8275,
-              },
-            ],
-            createdAt: '2023-11-07T12:12:15.229Z',
-            updatedAt: '2023-11-07T12:12:15.229Z',
-          },
-          {
-            _id: '654a299fae38d86c5c0b7915',
-            name: 'new sku',
-            price: 90,
-            quantity: 100,
-            variants: [
-              {
-                title: 'Back Color',
-                value: {
-                  name: 'green',
-                  value: '#1010ee',
-                },
-                type: {
-                  _id: '626955e809a5665331a6d453',
-                  title: 'Color',
-                  values: [
-                    {
-                      name: 'blue',
-                      value: '#1010ee',
-                    },
-                    {
-                      name: 'red',
-                      value: '#ee1010',
-                    },
-                    {
-                      name: 'green',
-                      value: '#10ee10',
-                    },
-                  ],
-                  createdAt: '2023-11-07T12:12:15.025Z',
-                  updatedAt: '2023-11-07T12:12:15.025Z',
-                },
-              },
-              {
-                title: 'Size',
-                value: {
-                  name: 'XL',
-                  value: 'XL',
-                },
-                type: {
-                  _id: '6252a2e5856d55aeb128e454',
-                  title: 'Size',
-                  values: [
-                    {
-                      name: 'S',
-                      value: 'S',
-                    },
-                    {
-                      name: 'M',
-                      value: 'M',
-                    },
-                    {
-                      name: 'L',
-                      value: 'L',
-                    },
-                    {
-                      name: 'XL',
-                      value: 'XL',
-                    },
-                  ],
-                  createdAt: '2023-11-07T12:12:15.025Z',
-                  updatedAt: '2023-11-07T12:12:15.025Z',
-                },
-              },
-            ],
-            images: [
-              {
-                id: '654a299fae38d86c5c0b78fb',
-                url: 'fake-url',
-                size: 8275,
-              },
-            ],
-            createdAt: '2023-11-07T12:12:15.259Z',
-  
-            updatedAt: '2023-11-07T12:12:15.259Z',
-          },
-        ],
-        createdAt: '2023-11-07T12:12:15.239Z',
+  const productsBulk = [
+    {
+      _id: '654a299fae38d86c5c0b790e',
+      name: 'product test',
+      description: 'description of product test',
+      brand: {
+        title: 'Updated brand title',
+        _id: '626955e809a5665331a6d073',
+        createdAt: '2023-11-07T12:12:22.290Z',
         updatedAt: '2023-11-07T12:12:22.290Z',
       },
-    ]
-  await mongoDbConnection.model('products', ProductSchema).insertMany(
-    productsBulk);
+      categories: [
+        {
+          _id: '6278dfae51749313a02d5452',
+          title: 'Running',
+          createdAt: '2023-11-07T12:12:20.453Z',
+
+          updatedAt: '2023-11-07T12:12:20.683Z',
+        },
+        {
+          _id: '6278dfa351749313a02d544c',
+          title: 'Spreadable Cheese, Parmesan With Garlic & Herbs',
+          createdAt: '2023-11-07T12:12:14.984Z',
+          updatedAt: '2023-11-07T12:12:14.984Z',
+        },
+      ],
+      images: [
+        {
+          id: '654a299fae38d86c5c0b78fb',
+          url: 'fake-url',
+          size: 8275,
+        },
+      ],
+      attributes: [],
+      skus: [
+        {
+          _id: '654a299fae38d86c5c0b7902',
+          name: 'updated name',
+          price: 100,
+          quantity: 100,
+          variants: [
+            {
+              title: 'Back Color',
+              value: {
+                name: 'blue',
+                value: '#1010ee',
+              },
+              type: {
+                _id: '626955e809a5665331a6d453',
+                title: 'Color',
+                values: [
+                  {
+                    name: 'blue',
+                    value: '#1010ee',
+                  },
+                  {
+                    name: 'red',
+                    value: '#ee1010',
+                  },
+                  {
+                    name: 'green',
+                    value: '#10ee10',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+            {
+              title: 'Size',
+              value: {
+                name: 'L',
+                value: 'L',
+              },
+              type: {
+                _id: '6252a2e5856d55aeb128e454',
+                title: 'Size',
+                values: [
+                  {
+                    name: 'S',
+                    value: 'S',
+                  },
+                  {
+                    name: 'M',
+                    value: 'M',
+                  },
+                  {
+                    name: 'L',
+                    value: 'L',
+                  },
+                  {
+                    name: 'XL',
+                    value: 'XL',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+          ],
+          images: [
+            {
+              id: '654a299fae38d86c5c0b78fb',
+              url: 'fake-url',
+              size: 8275,
+            },
+          ],
+          createdAt: '2023-11-07T12:12:15.230Z',
+
+          updatedAt: '2023-11-07T12:12:15.230Z',
+        },
+        {
+          _id: '654a299fae38d86c5c0b7903',
+          name: 'string',
+          price: 50,
+          quantity: 100,
+          variants: [
+            {
+              title: 'Back Color',
+              value: {
+                name: 'red',
+                value: '#ee1010',
+              },
+              type: {
+                _id: '626955e809a5665331a6d453',
+                title: 'Color',
+                values: [
+                  {
+                    name: 'blue',
+                    value: '#1010ee',
+                  },
+                  {
+                    name: 'red',
+                    value: '#ee1010',
+                  },
+                  {
+                    name: 'green',
+                    value: '#10ee10',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+            {
+              title: 'Size',
+              value: {
+                name: 'L',
+                value: 'L',
+              },
+              type: {
+                _id: '6252a2e5856d55aeb128e454',
+                title: 'Size',
+                values: [
+                  {
+                    name: 'S',
+                    value: 'S',
+                  },
+                  {
+                    name: 'M',
+                    value: 'M',
+                  },
+                  {
+                    name: 'L',
+                    value: 'L',
+                  },
+                  {
+                    name: 'XL',
+                    value: 'XL',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+          ],
+          images: [
+            {
+              id: '654a299fae38d86c5c0b78fb',
+              url: 'fake-url',
+              size: 8275,
+            },
+          ],
+          createdAt: '2023-11-07T12:12:15.231Z',
+
+          updatedAt: '2023-11-07T12:12:15.231Z',
+        },
+        {
+          _id: '654a299fae38d86c5c0b7904',
+          name: 'string',
+          price: 110,
+          quantity: 100,
+          variants: [
+            {
+              title: 'Back Color',
+              value: {
+                name: 'blue',
+                value: '#1010ee',
+              },
+              type: {
+                _id: '626955e809a5665331a6d453',
+                title: 'Color',
+                values: [
+                  {
+                    name: 'blue',
+                    value: '#1010ee',
+                  },
+                  {
+                    name: 'red',
+                    value: '#ee1010',
+                  },
+                  {
+                    name: 'green',
+                    value: '#10ee10',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+            {
+              title: 'Size',
+              value: {
+                name: 'XL',
+                value: 'XL',
+              },
+              type: {
+                _id: '6252a2e5856d55aeb128e454',
+                title: 'Size',
+                values: [
+                  {
+                    name: 'S',
+                    value: 'S',
+                  },
+                  {
+                    name: 'M',
+                    value: 'M',
+                  },
+                  {
+                    name: 'L',
+                    value: 'L',
+                  },
+                  {
+                    name: 'XL',
+                    value: 'XL',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+          ],
+          images: [
+            {
+              id: '654a299fae38d86c5c0b78fb',
+              url: 'fake-url',
+              size: 8275,
+            },
+          ],
+          createdAt: '2023-11-07T12:12:15.236Z',
+
+          updatedAt: '2023-11-07T12:12:15.236Z',
+        },
+        {
+          _id: '654a299fae38d86c5c0b7905',
+          name: 'string',
+          price: 130,
+          quantity: 100,
+          variants: [
+            {
+              title: 'Back Color',
+              value: {
+                name: 'red',
+                value: '#ee1010',
+              },
+              type: {
+                _id: '626955e809a5665331a6d453',
+                title: 'Color',
+                values: [
+                  {
+                    name: 'blue',
+                    value: '#1010ee',
+                  },
+                  {
+                    name: 'red',
+                    value: '#ee1010',
+                  },
+                  {
+                    name: 'green',
+                    value: '#10ee10',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+            {
+              title: 'Size',
+              value: {
+                name: 'XL',
+                value: 'XL',
+              },
+              type: {
+                _id: '6252a2e5856d55aeb128e454',
+                title: 'Size',
+                values: [
+                  {
+                    name: 'S',
+                    value: 'S',
+                  },
+                  {
+                    name: 'M',
+                    value: 'M',
+                  },
+                  {
+                    name: 'L',
+                    value: 'L',
+                  },
+                  {
+                    name: 'XL',
+                    value: 'XL',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+          ],
+          images: [
+            {
+              id: '654a299fae38d86c5c0b78fb',
+              url: 'fake-url',
+              size: 8275,
+            },
+          ],
+          createdAt: '2023-11-07T12:12:15.229Z',
+          updatedAt: '2023-11-07T12:12:15.229Z',
+        },
+        {
+          _id: '654a299fae38d86c5c0b7915',
+          name: 'new sku',
+          price: 90,
+          quantity: 100,
+          variants: [
+            {
+              title: 'Back Color',
+              value: {
+                name: 'green',
+                value: '#1010ee',
+              },
+              type: {
+                _id: '626955e809a5665331a6d453',
+                title: 'Color',
+                values: [
+                  {
+                    name: 'blue',
+                    value: '#1010ee',
+                  },
+                  {
+                    name: 'red',
+                    value: '#ee1010',
+                  },
+                  {
+                    name: 'green',
+                    value: '#10ee10',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+            {
+              title: 'Size',
+              value: {
+                name: 'XL',
+                value: 'XL',
+              },
+              type: {
+                _id: '6252a2e5856d55aeb128e454',
+                title: 'Size',
+                values: [
+                  {
+                    name: 'S',
+                    value: 'S',
+                  },
+                  {
+                    name: 'M',
+                    value: 'M',
+                  },
+                  {
+                    name: 'L',
+                    value: 'L',
+                  },
+                  {
+                    name: 'XL',
+                    value: 'XL',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+          ],
+          images: [
+            {
+              id: '654a299fae38d86c5c0b78fb',
+              url: 'fake-url',
+              size: 8275,
+            },
+          ],
+          createdAt: '2023-11-07T12:12:15.259Z',
+
+          updatedAt: '2023-11-07T12:12:15.259Z',
+        },
+      ],
+      createdAt: '2023-11-07T12:12:15.239Z',
+      updatedAt: '2023-11-07T12:12:22.290Z',
+    },
+    {
+      _id: '654a299fae38d86c5c0b7910',
+      name: 'product test 2',
+      description: 'description of product test',
+      brand: {
+        title: 'Updated brand title',
+        _id: '626955e809a5665331a6d073',
+        createdAt: '2023-11-07T12:12:22.290Z',
+        updatedAt: '2023-11-07T12:12:22.290Z',
+      },
+      categories: [
+        {
+          _id: '6278df7851749313a02d5432',
+          title: 'Potato Chips, Lightly Salted',
+          createdAt: '2023-11-07T12:12:20.453Z',
+          updatedAt: '2023-11-07T12:12:20.683Z',
+        },
+      ],
+      images: [
+        {
+          id: '654a299fae38d86c5c0b78fb',
+          url: 'fake-url',
+          size: 8275,
+        },
+      ],
+      attributes: [],
+      skus: [
+        {
+          _id: '654a299fae38d86c5c0b7902',
+          name: 'updated name',
+          price: 100,
+          quantity: 100,
+          variants: [
+            {
+              title: 'Back Color',
+              value: {
+                name: 'blue',
+                value: '#1010ee',
+              },
+              type: {
+                _id: '626955e809a5665331a6d453',
+                title: 'Color',
+                values: [
+                  {
+                    name: 'blue',
+                    value: '#1010ee',
+                  },
+                  {
+                    name: 'red',
+                    value: '#ee1010',
+                  },
+                  {
+                    name: 'green',
+                    value: '#10ee10',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+            {
+              title: 'Size',
+              value: {
+                name: 'L',
+                value: 'L',
+              },
+              type: {
+                _id: '6252a2e5856d55aeb128e454',
+                title: 'Size',
+                values: [
+                  {
+                    name: 'S',
+                    value: 'S',
+                  },
+                  {
+                    name: 'M',
+                    value: 'M',
+                  },
+                  {
+                    name: 'L',
+                    value: 'L',
+                  },
+                  {
+                    name: 'XL',
+                    value: 'XL',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+          ],
+          images: [
+            {
+              id: '654a299fae38d86c5c0b78fb',
+              url: 'fake-url',
+              size: 8275,
+            },
+          ],
+          createdAt: '2023-11-07T12:12:15.230Z',
+
+          updatedAt: '2023-11-07T12:12:15.230Z',
+        },
+        {
+          _id: '654a299fae38d86c5c0b7903',
+          name: 'string',
+          price: 50,
+          quantity: 100,
+          variants: [
+            {
+              title: 'Back Color',
+              value: {
+                name: 'red',
+                value: '#ee1010',
+              },
+              type: {
+                _id: '626955e809a5665331a6d453',
+                title: 'Color',
+                values: [
+                  {
+                    name: 'blue',
+                    value: '#1010ee',
+                  },
+                  {
+                    name: 'red',
+                    value: '#ee1010',
+                  },
+                  {
+                    name: 'green',
+                    value: '#10ee10',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+            {
+              title: 'Size',
+              value: {
+                name: 'L',
+                value: 'L',
+              },
+              type: {
+                _id: '6252a2e5856d55aeb128e454',
+                title: 'Size',
+                values: [
+                  {
+                    name: 'S',
+                    value: 'S',
+                  },
+                  {
+                    name: 'M',
+                    value: 'M',
+                  },
+                  {
+                    name: 'L',
+                    value: 'L',
+                  },
+                  {
+                    name: 'XL',
+                    value: 'XL',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+          ],
+          images: [
+            {
+              id: '654a299fae38d86c5c0b78fb',
+              url: 'fake-url',
+              size: 8275,
+            },
+          ],
+          createdAt: '2023-11-07T12:12:15.231Z',
+
+          updatedAt: '2023-11-07T12:12:15.231Z',
+        },
+        {
+          _id: '654a299fae38d86c5c0b7904',
+          name: 'string',
+          price: 110,
+          quantity: 100,
+          variants: [
+            {
+              title: 'Back Color',
+              value: {
+                name: 'blue',
+                value: '#1010ee',
+              },
+              type: {
+                _id: '626955e809a5665331a6d453',
+                title: 'Color',
+                values: [
+                  {
+                    name: 'blue',
+                    value: '#1010ee',
+                  },
+                  {
+                    name: 'red',
+                    value: '#ee1010',
+                  },
+                  {
+                    name: 'green',
+                    value: '#10ee10',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+            {
+              title: 'Size',
+              value: {
+                name: 'XL',
+                value: 'XL',
+              },
+              type: {
+                _id: '6252a2e5856d55aeb128e454',
+                title: 'Size',
+                values: [
+                  {
+                    name: 'S',
+                    value: 'S',
+                  },
+                  {
+                    name: 'M',
+                    value: 'M',
+                  },
+                  {
+                    name: 'L',
+                    value: 'L',
+                  },
+                  {
+                    name: 'XL',
+                    value: 'XL',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+          ],
+          images: [
+            {
+              id: '654a299fae38d86c5c0b78fb',
+              url: 'fake-url',
+              size: 8275,
+            },
+          ],
+          createdAt: '2023-11-07T12:12:15.236Z',
+
+          updatedAt: '2023-11-07T12:12:15.236Z',
+        },
+        {
+          _id: '654a299fae38d86c5c0b7905',
+          name: 'string',
+          price: 130,
+          quantity: 100,
+          variants: [
+            {
+              title: 'Back Color',
+              value: {
+                name: 'red',
+                value: '#ee1010',
+              },
+              type: {
+                _id: '626955e809a5665331a6d453',
+                title: 'Color',
+                values: [
+                  {
+                    name: 'blue',
+                    value: '#1010ee',
+                  },
+                  {
+                    name: 'red',
+                    value: '#ee1010',
+                  },
+                  {
+                    name: 'green',
+                    value: '#10ee10',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+            {
+              title: 'Size',
+              value: {
+                name: 'XL',
+                value: 'XL',
+              },
+              type: {
+                _id: '6252a2e5856d55aeb128e454',
+                title: 'Size',
+                values: [
+                  {
+                    name: 'S',
+                    value: 'S',
+                  },
+                  {
+                    name: 'M',
+                    value: 'M',
+                  },
+                  {
+                    name: 'L',
+                    value: 'L',
+                  },
+                  {
+                    name: 'XL',
+                    value: 'XL',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+          ],
+          images: [
+            {
+              id: '654a299fae38d86c5c0b78fb',
+              url: 'fake-url',
+              size: 8275,
+            },
+          ],
+          createdAt: '2023-11-07T12:12:15.229Z',
+          updatedAt: '2023-11-07T12:12:15.229Z',
+        },
+        {
+          _id: '654a299fae38d86c5c0b7915',
+          name: 'new sku',
+          price: 90,
+          quantity: 100,
+          variants: [
+            {
+              title: 'Back Color',
+              value: {
+                name: 'green',
+                value: '#1010ee',
+              },
+              type: {
+                _id: '626955e809a5665331a6d453',
+                title: 'Color',
+                values: [
+                  {
+                    name: 'blue',
+                    value: '#1010ee',
+                  },
+                  {
+                    name: 'red',
+                    value: '#ee1010',
+                  },
+                  {
+                    name: 'green',
+                    value: '#10ee10',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+            {
+              title: 'Size',
+              value: {
+                name: 'XL',
+                value: 'XL',
+              },
+              type: {
+                _id: '6252a2e5856d55aeb128e454',
+                title: 'Size',
+                values: [
+                  {
+                    name: 'S',
+                    value: 'S',
+                  },
+                  {
+                    name: 'M',
+                    value: 'M',
+                  },
+                  {
+                    name: 'L',
+                    value: 'L',
+                  },
+                  {
+                    name: 'XL',
+                    value: 'XL',
+                  },
+                ],
+                createdAt: '2023-11-07T12:12:15.025Z',
+                updatedAt: '2023-11-07T12:12:15.025Z',
+              },
+            },
+          ],
+          images: [
+            {
+              id: '654a299fae38d86c5c0b78fb',
+              url: 'fake-url',
+              size: 8275,
+            },
+          ],
+          createdAt: '2023-11-07T12:12:15.259Z',
+
+          updatedAt: '2023-11-07T12:12:15.259Z',
+        },
+      ],
+      createdAt: '2023-11-07T12:12:15.239Z',
+      updatedAt: '2023-11-07T12:12:22.290Z',
+    },
+  ];
+  await mongoDbConnection
+    .model('products', ProductSchema)
+    .insertMany(productsBulk);
 
   const connection = app.get(Connection);
   const queryRunner = connection.driver.createQueryRunner('master');
@@ -685,13 +1096,18 @@ async function initDb() {
   ('5','2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680',2,3,4),
   ('6','2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680',3,1,6);
   `);
-  
-  const inventoriesBulkQuery=[];
-  const skusList= productsBulk.map(product=>product.skus).flat(1).map(sku=>sku._id)
+
+  const inventoriesBulkQuery = [];
+  const skusList = productsBulk
+    .map((product) => product.skus)
+    .flat(1)
+    .map((sku) => sku._id);
   for (let warehouseId = 1; warehouseId < 7; warehouseId++) {
     for (let j = 0; j < 500; j++) {
-      const skuId=skusList[j%skusList.length]
-      inventoriesBulkQuery.push(`('2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680',${warehouseId},'${skuId}')`)
+      const skuId = skusList[j % skusList.length];
+      inventoriesBulkQuery.push(
+        `('2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680',${warehouseId},'${skuId}')`,
+      );
     }
   }
   await queryRunner.query(`

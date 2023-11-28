@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { Aggregate } from 'mongoose';
 import { Between, FindOperator, In, Like, Repository } from 'typeorm';
-import { FindAndPaginateOptions } from './types/find-and-paginate-options';
 import { ListQuery } from '../common/list-query.type';
 import { PaginatedList } from '../common/paginated-list.type';
-import { Aggregate } from 'mongoose';
+import { FindAndPaginateOptions } from './types/find-and-paginate-options';
 
 @Injectable()
 export class PaginationService {
@@ -11,14 +11,14 @@ export class PaginationService {
     repository: Repository<Entity>,
     listQuery: ListQuery,
     options: Partial<FindAndPaginateOptions<Entity>>,
-  ):Promise<PaginatedList<any>> {
+  ): Promise<PaginatedList<any>> {
     const completeOptions = new FindAndPaginateOptions<Entity>();
     Object.assign(completeOptions, options);
 
     const take = listQuery.take ?? 10;
     const skip = listQuery.skip ?? 0;
     let queryObject;
-   
+
     if (
       completeOptions.textSearchFields.length > 0 &&
       listQuery.search &&
@@ -81,25 +81,25 @@ export class PaginationService {
     };
   }
 
-  public async addPaginateToAggregate <T>(
+  public async addPaginateToAggregate<T>(
     aggregate: Aggregate<any[]>,
     listQuery: ListQuery,
     options: Partial<FindAndPaginateOptions<T>>,
   ): Promise<PaginatedList<any>> {
-
+    let { take, skip, search, ...filter } = listQuery;
+    take = take ?? 10;
+    skip = skip ?? 0;
     const completeOptions = new FindAndPaginateOptions<T>();
     Object.assign(completeOptions, options);
-    const take = listQuery.take ?? 20;
-    const skip = listQuery.skip ?? 1;
-  
+    aggregate.match(filter);
     aggregate.facet({
       count: [{ $count: 'totalCount' }],
       items: [{ $skip: skip }, { $limit: take }],
     });
-  
+
     const result = await aggregate;
 
-    const number =result[0]?.count[0]?.totalCount ?? 0;
+    const number = result[0]?.count[0]?.totalCount ?? 0;
     const pureItems = result[0].items;
     const totalPages = Math.floor(number / take) + (number % take > 0 ? 1 : 0);
     const currentPage = Math.floor(skip / take) + 1;
@@ -121,7 +121,7 @@ export class PaginationService {
         search: listQuery.search,
       },
     };
-  };
+  }
   paginateList<Entity>(list: Entity[]) {
     return {
       items: list,
@@ -184,11 +184,7 @@ export class PaginationService {
     };
   }
 
-  search(
-    filterQuery: any,
-    search: string,
-    textSearchFields: string[],
-  ) {
+  search(filterQuery: any, search: string, textSearchFields: string[]) {
     let queryObject: {};
 
     if (textSearchFields.length > 0 && search && search.length > 0) {
@@ -201,5 +197,4 @@ export class PaginationService {
     }
     return filterQuery;
   }
-
 }
