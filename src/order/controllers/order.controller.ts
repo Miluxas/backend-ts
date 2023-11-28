@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ErrorHandlerService } from '../../error-handler/error-handler.service';
 import { StandardResponseFactory } from '../../interceptors/formatter/standard-response.factory';
 import {
+  GetOrderDetailResponseDto,
+  GetOrderListResponseDto,
   ParcelInfoBodyDto,
   ParcelInfoResponseDto,
   RegisterOrderBodyDto,
@@ -12,6 +14,8 @@ import { OrderError } from '../errors';
 import { OrderService } from '../services/order.service';
 import { IdParamDto } from '../../common/id-param.dto';
 import { Authorization } from '../../common/authorization.decorator';
+import { ListQueryDto } from '../../common/list-query.dto';
+import { AuthorizedRequest } from '../../common/authorized-request.type';
 
 @ApiTags('Order')
 @Controller('orders')
@@ -26,8 +30,28 @@ export class OrderController {
   @ApiCreatedResponse({
     type: StandardResponseFactory(RegisterOrderResponseDto),
   })
-  async register(@Body() body: RegisterOrderBodyDto) {
-    return this.orderService.register(body).catch((error) => {
+  async register(@Req() req:AuthorizedRequest,@Body() body: RegisterOrderBodyDto) {
+    return this.orderService.register(body,req.rbContent).catch((error) => {
+      this.errorHandlerService.getMessage(error);
+    });
+  }
+
+  @Get('')
+  @ApiCreatedResponse({
+    type: StandardResponseFactory(GetOrderListResponseDto),
+  })
+  async list(@Req() req:AuthorizedRequest,@Query() query: ListQueryDto) {
+    return this.orderService.getAll(query,req.rbContent).catch((error) => {
+      this.errorHandlerService.getMessage(error);
+    });
+  }
+
+  @Get('/:id')
+  @ApiOkResponse({
+    type: StandardResponseFactory(GetOrderDetailResponseDto),
+  })
+  getDetail(@Param() param: IdParamDto) {
+    return this.orderService.getById(param.id).catch((error) => {
       this.errorHandlerService.getMessage(error);
     });
   }

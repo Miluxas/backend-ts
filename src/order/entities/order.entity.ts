@@ -8,6 +8,9 @@ export class Order extends BaseModel {
 
   @Column()
   areaId: number;
+
+  @Column()
+  userId: number;
 }
 
 export class OrderItem {

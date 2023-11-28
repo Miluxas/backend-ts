@@ -6,6 +6,10 @@ import { SkuService } from '../../catalog/services/sku.service';
 import { ParcelService } from '../../inventory/services/parcel.service';
 import { Order } from '../entities/order.entity';
 import { IRegisterOrder } from '../interfaces';
+import { ListQuery } from '../../common/list-query.type';
+import { PaginatedList } from '../../common/paginated-list.type';
+import { PaginationService } from '../../pagination/pagination.service';
+import { OrderError } from '../errors';
 
 @Injectable()
 export class OrderService {
@@ -14,10 +18,32 @@ export class OrderService {
     private readonly orderRepository: Repository<Order>,
     private readonly skuService: SkuService,
     private readonly parcelService: ParcelService,
+    private readonly paginationService: PaginationService,
   ) {}
 
-  public async register(newOrder: IRegisterOrder): Promise<Order> {
+  async getAll(query: ListQuery,rbContent?:any): Promise<PaginatedList<any>> {
+    return this.paginationService.findAndPaginate<Order>(
+      this.orderRepository,
+      query,
+      rbContent?{filterQuery:{userId:rbContent['userId']}}:{},
+    );
+  }
+
+  public async getById(id: number,rbContent?:any): Promise<Order> {
+    const filter={id};
+    if(rbContent){
+      Object.assign(filter,{userId:rbContent['userId']})
+    }
+    const foundOrder = await this.orderRepository.findOneBy(filter);
+    if (!foundOrder) {
+      throw new Error(OrderError.ORDER_NOT_FOUND);
+    }
+    return foundOrder;
+  }
+
+  public async register(newOrder: IRegisterOrder,rbContent?:any): Promise<Order> {
     const order = new Order();
+    Object.assign(order,rbContent)
     order.areaId = 1;
     order.items = await Promise.all(
       newOrder.items.map(async (item) => ({
