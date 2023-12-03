@@ -19,31 +19,35 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       context.getHandler(),
       context.getClass(),
     ]);
-    if (isPublic) {
-      return true;
-    }
-    const baseGuardResult = await super.canActivate(context);
-    if (!baseGuardResult) {
-      throw new UnauthorizedException();
-    }
-    const bearer: string = context.switchToHttp().getRequest()
-      .headers?.authorization;
-    await this.tokenValidate(bearer);
-    const { user, url, method } = context.switchToHttp().getRequest();
-    const accessStatus = this.rBACService.checkAccess(
-      user.roles,
-      user.id,
-      method,
-      url,
-    );
-    context.switchToHttp().getRequest()['rbContent']=accessStatus.rbContent
-    return accessStatus.grant;
-  }
+    try {
+      const baseGuardResult = await super.canActivate(context);
+      if (!baseGuardResult) {
+        throw new UnauthorizedException();
+      }
 
-  private async tokenValidate(bearer: string) {
-    if (!bearer) throw new UnauthorizedException();
-    const token = this.getToken(bearer);
-    if (!token) throw new UnauthorizedException();
+      const bearer: string = context.switchToHttp().getRequest()
+        .headers?.authorization;
+      if (!bearer) {
+        throw new UnauthorizedException();
+      }
+      const token = this.getToken(bearer);
+      if (!token) {
+        throw new UnauthorizedException();
+      }
+
+      const { user, url, method } = context.switchToHttp().getRequest();
+      const accessStatus = this.rBACService.checkAccess(
+        user.roles,
+        user.id,
+        method,
+        url,
+      );
+      context.switchToHttp().getRequest()['rbContent'] = accessStatus.rbContent;
+      if (!accessStatus.grant) throw new UnauthorizedException();
+    } catch {
+      if (!isPublic) throw new UnauthorizedException();
+    }
+    return true;
   }
 
   private getToken(bearer: string): string | void {
