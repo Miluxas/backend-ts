@@ -25,7 +25,13 @@ const permissions: {
     {
       method: '*',
       url: '/orders*',
-      desc: 'The user manage orders',
+      desc: 'The user manages orders',
+      rbContent: { userId: '$userId' },
+    }, 
+    {
+      method: '*',
+      url: '/shopping-cart*',
+      desc: 'The user manages shopping cart',
       rbContent: { userId: '$userId' },
     },
   ],

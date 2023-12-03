@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IMedia } from '../interfaces';
 import { GetBrandDetailResponseDto } from './get-brand-detail.dto';
 import { GetCategoryDetailResponseDto } from './get-category-detail.dto';
+import { IMedia } from '../../common/media.interface';
 
 export class GetProductDetailResponseDto {
   @ApiProperty()
@@ -25,9 +25,8 @@ export class GetProductDetailResponseDto {
   attributes?: { name: string; value: string }[];
 
   @ApiProperty()
-skus:SkuResponseDto[];
+  skus: SkuResponseDto[];
 }
-
 
 export class SkuResponseDto {
   @ApiProperty()

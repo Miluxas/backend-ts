@@ -3,7 +3,7 @@ import { HydratedDocument, Types } from 'mongoose';
 import { Brand } from './brand.model';
 import { Category } from './category.model';
 import { VariableType, VariableValue } from './variable-type.model';
-import { IMedia } from '../interfaces/media.interface';
+import { IMedia } from '../../common/media.interface';
 
 export type ProductDocument = HydratedDocument<Product>;
 

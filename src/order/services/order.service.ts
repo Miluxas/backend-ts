@@ -21,18 +21,18 @@ export class OrderService {
     private readonly paginationService: PaginationService,
   ) {}
 
-  async getAll(query: ListQuery,rbContent?:any): Promise<PaginatedList<any>> {
+  async getAll(query: ListQuery, rbContent?: any): Promise<PaginatedList<any>> {
     return this.paginationService.findAndPaginate<Order>(
       this.orderRepository,
       query,
-      rbContent?{filterQuery:{userId:rbContent['userId']}}:{},
+      rbContent ? { filterQuery: rbContent } : {},
     );
   }
 
-  public async getById(id: number,rbContent?:any): Promise<Order> {
-    const filter={id};
-    if(rbContent){
-      Object.assign(filter,{userId:rbContent['userId']})
+  public async getById(id: number, rbContent?: any): Promise<Order> {
+    const filter = { id };
+    if (rbContent) {
+      Object.assign(filter, rbContent);
     }
     const foundOrder = await this.orderRepository.findOneBy(filter);
     if (!foundOrder) {
@@ -41,9 +41,12 @@ export class OrderService {
     return foundOrder;
   }
 
-  public async register(newOrder: IRegisterOrder,rbContent?:any): Promise<Order> {
+  public async register(
+    newOrder: IRegisterOrder,
+    rbContent?: any,
+  ): Promise<Order> {
     const order = new Order();
-    Object.assign(order,rbContent)
+    Object.assign(order, rbContent);
     order.areaId = 1;
     order.items = await Promise.all(
       newOrder.items.map(async (item) => ({
