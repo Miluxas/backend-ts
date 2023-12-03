@@ -34,6 +34,18 @@ const permissions: {
       desc: 'The user manages shopping cart',
       rbContent: { userId: '$userId' },
     },
+    {
+      method: 'PUT',
+      url: '/products/',
+      desc: 'The user update review',
+      rbContent: { userId: '$userId' },
+    },
+    {
+      method: 'DELETE',
+      url: '/products/',
+      desc: 'The user remove review',
+      rbContent: { userId: '$userId' },
+    },
   ],
   Admin: [{ method: '*', url: '/*', desc: 'The admin has fully permission' }],
 };

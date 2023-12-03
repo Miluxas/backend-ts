@@ -38,13 +38,17 @@ export class ProductService {
     );
   }
 
-  public async getById(_id: string): Promise<Product> {
+  public async getById(_id: string, userId?: number): Promise<Product> {
     const foundProduct = await this.productModel
       .findById(new Types.ObjectId(_id))
       .lean()
       .exec();
     if (!foundProduct) {
       throw new Error(ProductError.PRODUCT_NOT_FOUND);
+    }
+    if (userId) {
+      const myReview = foundProduct.reviews.find((rev) => rev.userId == userId);
+      return { ...foundProduct, myReview };
     }
     return foundProduct;
   }
@@ -176,5 +180,40 @@ export class ProductService {
   public async delete(_id: string): Promise<boolean> {
     await this.productModel.findByIdAndDelete(new Types.ObjectId(_id)).exec();
     return true;
+  }
+
+  public async updateReview(
+    _id: string,
+    userId: number,
+    rate: number,
+    comment?: string,
+  ) {
+    const foundProduct = await this.productModel.findById(_id).exec();
+    if (!foundProduct) {
+      throw new Error(ProductError.PRODUCT_NOT_FOUND);
+    }
+    if (!foundProduct.reviews) foundProduct.reviews = [];
+    let userComment = foundProduct.reviews.find((rev) => rev.userId == userId);
+    if (userComment) {
+      userComment.comment = comment;
+      userComment.rate = rate;
+    } else {
+      foundProduct.reviews.push({ rate, comment, userId });
+    }
+
+    foundProduct.markModified('reviews');
+    return foundProduct.save();
+  }
+  
+  public async deleteReview(_id: string, userId: number) {
+    const foundProduct = await this.productModel.findById(_id).exec();
+    if (!foundProduct) {
+      throw new Error(ProductError.PRODUCT_NOT_FOUND);
+    }
+    foundProduct.reviews = (foundProduct.reviews??[]).filter(
+      (rev) => rev.userId != userId,
+    );
+    foundProduct.markModified('reviews');
+    return foundProduct.save();
   }
 }

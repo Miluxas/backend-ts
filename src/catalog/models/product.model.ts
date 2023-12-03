@@ -32,6 +32,10 @@ export class Product {
   @Prop()
   skus: Sku[];
 
+  @Prop()
+  reviews?: Review[];
+
+  myReview: Review;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -53,3 +57,9 @@ export class Sku {
   updatedAt: Date;
 }
 export const ProductSchema = SchemaFactory.createForClass(Product);
+
+class Review {
+  comment: string;
+  rate: number;
+  userId: number;
+}

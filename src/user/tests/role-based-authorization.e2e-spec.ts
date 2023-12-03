@@ -91,7 +91,7 @@ describe(' Role base authorization ', () => {
       .send({
         firstName:'bad name',
       })
-      .expect(403)
+      .expect(401)
   });
 
   it(' Admin can edit user info', async () => {

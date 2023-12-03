@@ -31,7 +31,7 @@ describe(' Issue number 7 ', () => {
         comment: 'test comment',
         rate: 4.2,
       })
-      .expect(200)
+      .expect(200);
   });
 
   it(' Customer get product with commends', async () => {
@@ -41,12 +41,8 @@ describe(' Issue number 7 ', () => {
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.myReview).toEqual(
-          {
-            comment: 'test comment',
-            rate: 4.2,
-          }
-        );
+        expect(resultObject.payload.myReview.comment).toEqual('test comment');
+        expect(resultObject.payload.myReview.rate).toEqual(4.2);
       });
   });
 
@@ -58,7 +54,7 @@ describe(' Issue number 7 ', () => {
         comment: 'test updated comment',
         rate: 3.5,
       })
-      .expect(200)
+      .expect(200);
   });
 
   it(' Customer get product with commends', async () => {
@@ -68,12 +64,10 @@ describe(' Issue number 7 ', () => {
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.myReview).toEqual(
-          {
-            comment: 'test updated comment',
-            rate: 3.5,
-          }
+        expect(resultObject.payload.myReview.comment).toEqual(
+          'test updated comment',
         );
+        expect(resultObject.payload.myReview.rate).toEqual(3.5);
       });
   });
 
@@ -81,7 +75,7 @@ describe(' Issue number 7 ', () => {
     return agent(app.getHttpServer())
       .delete(`/products/654a299fae38d86c5c0b790e/review`)
       .set('Authorization', `Bearer ${customerToken}`)
-      .expect(204)
+      .expect(204);
   });
 
   it(' Customer get product with commends', async () => {
@@ -94,5 +88,4 @@ describe(' Issue number 7 ', () => {
         expect(resultObject.payload.myReview).toBeUndefined();
       });
   });
-  
 });

@@ -18,3 +18,4 @@ export * from './get-variable-type-detail.dto';
 export * from './get-variable-type-list.dto';
 export * from './update-variable-type.dto';
 
+export * from './update-review.dto'
