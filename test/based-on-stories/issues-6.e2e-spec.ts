@@ -45,7 +45,7 @@ describe(' Issue number 6 ', () => {
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.items[0].sku).toEqual(
+        expect(resultObject.payload.items[0].skuId).toEqual(
           '654a299fae38d86c5c0b8902',
         );
         expect(resultObject.payload.items[0].count).toEqual(3);
@@ -59,7 +59,7 @@ describe(' Issue number 6 ', () => {
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.items[0].sku).toEqual(
+        expect(resultObject.payload.items[0].skuId).toEqual(
           '654a299fae38d86c5c0b8902',
         );
         expect(resultObject.payload.items[0].count).toEqual(3);
@@ -78,7 +78,7 @@ describe(' Issue number 6 ', () => {
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.items[1].sku).toEqual(
+        expect(resultObject.payload.items[1].skuId).toEqual(
           '654a299fae38d86c5c0b7902',
         );
         expect(resultObject.payload.items[1].count).toEqual(2);
@@ -93,11 +93,11 @@ describe(' Issue number 6 ', () => {
       .then((result) => {
         const resultObject = JSON.parse(result.text);
         expect(resultObject.payload.items.length).toEqual(2);
-        expect(resultObject.payload.items[0].sku).toEqual(
+        expect(resultObject.payload.items[0].skuId).toEqual(
           '654a299fae38d86c5c0b8902',
         );
         expect(resultObject.payload.items[0].count).toEqual(3);
-        expect(resultObject.payload.items[1].sku).toEqual(
+        expect(resultObject.payload.items[1].skuId).toEqual(
           '654a299fae38d86c5c0b7902',
         );
         expect(resultObject.payload.items[1].count).toEqual(2);
@@ -106,12 +106,13 @@ describe(' Issue number 6 ', () => {
 
   it(' Customer remove a SKU from shopping cart', async () => {
     return agent(app.getHttpServer())
-      .delete(`/shopping-cart`)
+      .put(`/shopping-cart`)
       .set('Authorization', `Bearer ${customerToken}`)
       .send({
         sku: '654a299fae38d86c5c0b8902',
+        count: 0,
       })
-      .expect(204);
+      .expect(200)
   });
 
   it(' Customer get his/her shopping cart', async () => {
@@ -122,10 +123,10 @@ describe(' Issue number 6 ', () => {
       .then((result) => {
         const resultObject = JSON.parse(result.text);
         expect(resultObject.payload.items.length).toEqual(1);
-        expect(resultObject.payload.items[1].sku).toEqual(
+        expect(resultObject.payload.items[0].skuId).toEqual(
           '654a299fae38d86c5c0b7902',
         );
-        expect(resultObject.payload.items[1].count).toEqual(2);
+        expect(resultObject.payload.items[0].count).toEqual(2);
       });
   });
 });

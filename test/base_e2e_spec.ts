@@ -1103,7 +1103,7 @@ async function initDb() {
     .flat(1)
     .map((sku) => sku._id);
   for (let warehouseId = 1; warehouseId < 7; warehouseId++) {
-    for (let j = 0; j < 500; j++) {
+    for (let j = 0; j < 1000; j++) {
       const skuId = skusList[j % skusList.length];
       inventoriesBulkQuery.push(
         `('2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680',${warehouseId},'${skuId}')`,
