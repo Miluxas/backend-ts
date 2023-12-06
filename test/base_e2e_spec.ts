@@ -240,6 +240,8 @@ async function initDb() {
       _id: '654a299fae38d86c5c0b790e',
       name: 'product test',
       description: 'description of product test',
+      rateAverage: 2.9,
+      salesCount: 18,
       brand: {
         title: 'Updated brand title',
         _id: '626955e809a5665331a6d073',
@@ -501,7 +503,7 @@ async function initDb() {
         {
           _id: '654a299fae38d86c5c0b7905',
           name: 'string',
-          price: 130,
+          price: 135,
           quantity: 100,
           variants: [
             {
@@ -657,6 +659,8 @@ async function initDb() {
       _id: '654a299fae38d86c5c0b7910',
       name: 'product test 2 nfound',
       description: 'description of product test dfound',
+      rateAverage: 3.9,
+      salesCount: 8,
       brand: {
         title: 'Updated brand title',
         _id: '626955e809a5665331a6d073',
@@ -759,7 +763,7 @@ async function initDb() {
         {
           _id: '654a299fae38d86c5c0b8903',
           name: 'string',
-          price: 50,
+          price: 48,
           quantity: 100,
           variants: [
             {

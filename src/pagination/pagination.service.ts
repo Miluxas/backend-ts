@@ -86,7 +86,7 @@ export class PaginationService {
     listQuery: ListQuery,
     options: Partial<FindAndPaginateOptions<T>>,
   ): Promise<PaginatedList<any>> {
-    let { take, skip, search, ...filter } = listQuery;
+    let { take, skip, search, sort, ...filter } = listQuery;
     take = take ?? 10;
     skip = skip ?? 0;
     const completeOptions = new FindAndPaginateOptions<T>();
@@ -104,7 +104,24 @@ export class PaginationService {
         })),
       });
     }
+    Object.keys(filter).forEach((key) => {
+      if (key.endsWith('.min')) {
+        filter[key.replace('.min', '')] = { $gte: Number(filter[key]) };
+        delete filter[key];
+      }
+      if (key.endsWith('.max')) {
+        filter[key.replace('.max', '')] = { $lte: Number(filter[key]) };
+        delete filter[key];
+      }
+    });
     aggregate.match(filter);
+    if (sort) {
+      if (sort.endsWith('.asc')) {
+        aggregate.sort(sort.replace('.asc', ''));
+      } else if (sort.endsWith('.desc')) {
+        aggregate.sort({ [sort.replace('.desc', '')]: -1 });
+      } else aggregate.sort(sort);
+    }
     aggregate.facet({
       count: [{ $count: 'totalCount' }],
       items: [{ $skip: skip }, { $limit: take }],

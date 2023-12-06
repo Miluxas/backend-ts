@@ -38,6 +38,12 @@ export class Product {
   @Prop({ default: [] })
   wishedBy: number[];
 
+  @Prop()
+  salesCount: number;
+
+  @Prop()
+  rateAverage: number;
+
   myReview: Review;
   isWished: boolean;
   createdAt: Date;
