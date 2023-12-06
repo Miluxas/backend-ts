@@ -19,3 +19,5 @@ export * from './get-variable-type-list.dto';
 export * from './update-variable-type.dto';
 
 export * from './update-review.dto'
+
+export * from './wishlist.dto'

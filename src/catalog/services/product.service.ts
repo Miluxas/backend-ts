@@ -48,7 +48,8 @@ export class ProductService {
     }
     if (userId) {
       const myReview = foundProduct.reviews.find((rev) => rev.userId == userId);
-      return { ...foundProduct, myReview };
+      const isWished = foundProduct.wishedBy.includes(userId);
+      return { ...foundProduct, myReview ,isWished};
     }
     return foundProduct;
   }

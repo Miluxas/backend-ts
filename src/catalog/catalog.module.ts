@@ -7,6 +7,7 @@ import { CategoryController } from './controllers/category.controller';
 import { ProductController } from './controllers/product.controller';
 import { SkuController } from './controllers/sku.controller';
 import { VariableTypeController } from './controllers/variable-type.controller';
+import { WishlistController } from './controllers/wishlist.controller';
 import {
   BrandErrorMessages,
   CategoryErrorMessages,
@@ -21,6 +22,7 @@ import { CategoryService } from './services/category.service';
 import { ProductService } from './services/product.service';
 import { SkuService } from './services/sku.service';
 import { VariableTypeService } from './services/variable-type.service';
+import { WishlistService } from './services/wishlist.service';
 
 @Module({
   imports: [
@@ -55,6 +57,7 @@ import { VariableTypeService } from './services/variable-type.service';
     ProductController,
     VariableTypeController,
     SkuController,
+    WishlistController,
   ],
   providers: [
     CategoryService,
@@ -62,6 +65,7 @@ import { VariableTypeService } from './services/variable-type.service';
     ProductService,
     VariableTypeService,
     SkuService,
+    WishlistService,
   ],
   exports: [SkuService],
 })

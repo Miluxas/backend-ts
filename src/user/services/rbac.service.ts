@@ -46,6 +46,12 @@ const permissions: {
       desc: 'The user remove review',
       rbContent: { userId: '$userId' },
     },
+    {
+      method: '*',
+      url: '/wishlist*',
+      desc: 'The user manage wishlist',
+      rbContent: { userId: '$userId' },
+    },
   ],
   Admin: [{ method: '*', url: '/*', desc: 'The admin has fully permission' }],
 };

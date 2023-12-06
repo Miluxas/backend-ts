@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { IMedia } from '../../common/media.interface';
 import { Brand } from './brand.model';
 import { Category } from './category.model';
 import { VariableType, VariableValue } from './variable-type.model';
-import { IMedia } from '../../common/media.interface';
 
 export type ProductDocument = HydratedDocument<Product>;
 
@@ -35,7 +35,11 @@ export class Product {
   @Prop()
   reviews?: Review[];
 
+  @Prop({ default: [] })
+  wishedBy: number[];
+
   myReview: Review;
+  isWished: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
