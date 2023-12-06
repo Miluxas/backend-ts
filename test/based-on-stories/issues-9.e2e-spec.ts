@@ -13,13 +13,15 @@ describe(' Issue number 9 ', () => {
       .then((result) => {
         const resultObject = JSON.parse(result.text);
         expect(resultObject.payload.pagination.itemCount).toEqual(1);
-        expect(resultObject.payload.items[0].categories[0]._id).toEqual('6278dfae51749313a02d5452');
+        expect(resultObject.payload.items[0].categories[0]._id).toEqual(
+          '6278dfae51749313a02d5452',
+        );
       });
   });
 
   it(' Customer get product list by min price filter', async () => {
     return agent(app.getHttpServer())
-      .get(`/products?skus.price.min=130`)
+      .get(`/products?skus.price.min=135`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
@@ -39,63 +41,73 @@ describe(' Issue number 9 ', () => {
 
   it(' Customer get product list by price asc sort', async () => {
     return agent(app.getHttpServer())
-      .get(`/products?sort=skus.price:asc`)
+      .get(`/products?sort=skus.price`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.pagination.itemCount).toEqual(1);
+        expect(resultObject.payload.items[0]._id).toEqual(
+          '654a299fae38d86c5c0b7910',
+        );
       });
   });
 
   it(' Customer get product list by price desc sort', async () => {
     return agent(app.getHttpServer())
-      .get(`/products?sort=skus.price:desc`)
+      .get(`/products?sort=skus.price.desc`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.pagination.itemCount).toEqual(1);
+        expect(resultObject.payload.items[0]._id).toEqual(
+          '654a299fae38d86c5c0b790e',
+        );
       });
   });
 
-
   it(' Customer get product list by sales count asc sort', async () => {
     return agent(app.getHttpServer())
-      .get(`/products?sort=salesCount:asc`)
+      .get(`/products?sort=salesCount`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.pagination.itemCount).toEqual(1);
+        expect(resultObject.payload.items[0]._id).toEqual(
+          '654a299fae38d86c5c0b7910',
+        );
       });
   });
 
   it(' Customer get product list by sales count desc sort', async () => {
     return agent(app.getHttpServer())
-      .get(`/products?sort=salesCount:desc`)
+      .get(`/products?sort=salesCount.desc`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.pagination.itemCount).toEqual(1);
+        expect(resultObject.payload.items[0]._id).toEqual(
+          '654a299fae38d86c5c0b790e',
+        );
       });
   });
 
   it(' Customer get product list by rete average asc sort', async () => {
     return agent(app.getHttpServer())
-      .get(`/products?sort=rateAverage:asc`)
+      .get(`/products?sort=rateAverage`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.pagination.itemCount).toEqual(1);
+        expect(resultObject.payload.items[0]._id).toEqual(
+          '654a299fae38d86c5c0b790e',
+        );
       });
   });
 
   it(' Customer get product list by rete average desc sort', async () => {
     return agent(app.getHttpServer())
-      .get(`/products?sort=rateAverage:desc`)
+      .get(`/products?sort=rateAverage.desc`)
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.pagination.itemCount).toEqual(1);
+        expect(resultObject.payload.items[0]._id).toEqual(
+          '654a299fae38d86c5c0b7910',
+        );
       });
   });
-
 });
