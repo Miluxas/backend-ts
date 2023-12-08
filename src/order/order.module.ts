@@ -3,17 +3,20 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '../catalog/catalog.module';
 import { ErrorHandlerModule } from '../error-handler/error-handler.module';
 import { InventoryModule } from '../inventory/inventory.module';
+import { AddressController } from './controllers/address.controller';
 import { OrderController } from './controllers/order.controller';
-import { Order } from './entities/order.entity';
-import { orderErrorMessages, parcelErrorMessages } from './errors';
-import { OrderService } from './services/order.service';
-import { ShoppingCart } from './entities/shopping-cart.entity';
-import { ShoppingCartService } from './services/shopping-cart.service';
 import { ShoppingCartController } from './controllers/shopping-cart.controller';
+import { Address } from './entities/address.entity';
+import { Order } from './entities/order.entity';
+import { ShoppingCart } from './entities/shopping-cart.entity';
+import { orderErrorMessages, parcelErrorMessages } from './errors';
+import { AddressService } from './services/address.service';
+import { OrderService } from './services/order.service';
+import { ShoppingCartService } from './services/shopping-cart.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Order,ShoppingCart]),
+    TypeOrmModule.forFeature([Order, ShoppingCart, Address]),
     ErrorHandlerModule.register({
       ...orderErrorMessages,
       ...parcelErrorMessages,
@@ -21,7 +24,7 @@ import { ShoppingCartController } from './controllers/shopping-cart.controller';
     CatalogModule,
     InventoryModule,
   ],
-  controllers: [OrderController,ShoppingCartController],
-  providers: [OrderService,ShoppingCartService],
+  controllers: [OrderController, ShoppingCartController, AddressController],
+  providers: [OrderService, ShoppingCartService, AddressService],
 })
 export class OrderModule {}

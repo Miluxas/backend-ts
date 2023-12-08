@@ -52,6 +52,12 @@ const permissions: {
       desc: 'The user manage wishlist',
       rbContent: { userId: '$userId' },
     },
+    {
+      method: '*',
+      url: '/addresses*',
+      desc: 'The user manage addresses',
+      rbContent: { userId: '$userId' },
+    },
   ],
   Admin: [{ method: '*', url: '/*', desc: 'The admin has fully permission' }],
 };
