@@ -1101,6 +1101,26 @@ async function initDb() {
   ('6','2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680',3,1,6);
   `);
 
+  await queryRunner.query(`
+  INSERT INTO country(id, createdAt, updatedAt, name, flag) VALUES 
+  ('1','2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680','British','flag');
+  `);
+
+  await queryRunner.query(`
+  INSERT INTO state(id, createdAt, updatedAt, name, countryId, countryName) VALUES 
+  ('1','2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680','British',1,'British');
+  `);
+
+  await queryRunner.query(`
+  INSERT INTO city(id, createdAt, updatedAt, name, countryId, countryName,stateId,stateName) VALUES 
+  ('1','2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680','London',1,'British',1,'British');
+  `);
+
+  await queryRunner.query(`
+  INSERT INTO area(id, createdAt, updatedAt, countryId,stateId,cityId) VALUES 
+  ('1','2022-11-04 01:02:08.162680','2022-11-04 01:02:08.162680',1,1,1);
+  `);
+
   const inventoriesBulkQuery = [];
   const skusList = productsBulk
     .map((product) => product.skus)

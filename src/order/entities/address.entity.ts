@@ -38,7 +38,5 @@ export class Address extends BaseModel {
 
   @Column()
   postalCode: string;
-
-
 }
 
