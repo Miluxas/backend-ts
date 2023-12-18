@@ -19,6 +19,9 @@ export class Address extends BaseModel {
   cityId: number;
 
   @Column()
+  name: string;
+
+  @Column()
   countryName: string;
 
   @Column()
@@ -38,5 +41,7 @@ export class Address extends BaseModel {
 
   @Column()
   postalCode: string;
-}
 
+  @Column({ default: false })
+  isDefault: boolean;
+}

@@ -1,11 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class GetAddressListResponseDto {
+export class GetAddressDetailResponseDto {
   @ApiProperty()
   id: number;
 
   @ApiProperty()
   name: string;
+
+  @ApiProperty()
+  areaId: number;
+
+  @ApiProperty()
+  cityId: number;
+
+  @ApiProperty()
+  stateId: number;
+
+  @ApiProperty()
+  countryId: number;
 
   @ApiProperty()
   cityName: string;

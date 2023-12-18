@@ -6,12 +6,18 @@ import { ListQuery } from '../../common/list-query.type';
 import { PaginatedList } from '../../common/paginated-list.type';
 import { PaginationService } from '../../pagination/pagination.service';
 import { Address } from '../entities/address.entity';
+import { ICreateAddress } from '../interfaces';
+import { Country } from '../entities/country.entity';
+import { State } from '../entities/state.entity';
+import { City } from '../entities/city.entity';
 
 @Injectable()
 export class AddressService {
   constructor(
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
+    @InjectRepository(City)
+    private readonly cityRepository: Repository<City>,
     private readonly paginationService: PaginationService,
   ) {}
 
@@ -21,5 +27,56 @@ export class AddressService {
       query,
       rbContent ? { filterQuery: rbContent } : {},
     );
+  }
+
+  public async create(
+    newAddress: ICreateAddress,
+    rbContent?: any,
+  ): Promise<Address> {
+    const address = new Address();
+    Object.assign(address, rbContent);
+    Object.assign(address, newAddress);
+    const city = await this.cityRepository.findOneBy({ id: address.cityId });
+    address.cityName = city.name;
+    address.countryId = city.countryId;
+    address.countryName = city.countryName;
+    address.stateId = city.stateId;
+    address.stateName = city.stateName;
+    return this.addressRepository.save(address);
+  }
+
+  public async update(
+    id: number,
+    newAddress: ICreateAddress,
+    rbContent?: any,
+  ): Promise<Address> {
+    const filter = rbContent ?? {};
+    Object.assign(filter, { id });
+    const address = await this.addressRepository.findOneBy(filter);
+    Object.assign(address, newAddress);
+    if (newAddress.cityId) {
+      const city = await this.cityRepository.findOneBy({ id: address.cityId });
+      address.cityName = city.name;
+      address.countryId = city.countryId;
+      address.countryName = city.countryName;
+      address.stateId = city.stateId;
+      address.stateName = city.stateName;
+    }
+    return this.addressRepository.save(address);
+  }
+
+  public async setDefault(id: number, rbContent?: any): Promise<boolean> {
+    const filter = rbContent ?? {};
+    await this.addressRepository.update(filter, { isDefault: false });
+    Object.assign(filter, { id });
+    await this.addressRepository.update(filter, { isDefault: true });
+    return true;
+  }
+  
+  public async delete(id: number, rbContent?: any): Promise<boolean> {
+    const filter = rbContent ?? {};
+    Object.assign(filter, { id });
+    await this.addressRepository.softRemove(filter);
+    return true;
   }
 }

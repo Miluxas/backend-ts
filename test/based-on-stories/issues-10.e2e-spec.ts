@@ -40,6 +40,7 @@ describe(' Issue number 10 ', () => {
       .post(`/addresses`)
       .set('Authorization', `Bearer ${customerToken}`)
       .send({
+        name: 'test address',
         cityId: 1,
         latitude: 38.878767,
         longitude: 45.023025,
@@ -63,7 +64,7 @@ describe(' Issue number 10 ', () => {
       .set('Authorization', `Bearer ${customerToken}`)
       .send({
         postalCode: '123123',
-            })
+      })
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
@@ -78,8 +79,8 @@ describe(' Issue number 10 ', () => {
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.isDefault).toEqual(true);
-      })
+        expect(resultObject.payload).toEqual(true);
+      });
   });
 
   it(' Customer remove an address', async () => {
