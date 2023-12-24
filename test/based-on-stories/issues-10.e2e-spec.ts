@@ -1,5 +1,6 @@
 import { agent } from 'supertest';
 import { app, baseAfterAll, baseBeforeAll } from '../../test/base_e2e_spec';
+import { addressErrorMessages } from '../../src/order/errors';
 
 describe(' Issue number 10 ', () => {
   beforeAll(baseBeforeAll);
@@ -42,9 +43,8 @@ describe(' Issue number 10 ', () => {
       .send({
         name: 'test address',
         cityId: 1,
-        latitude: 38.878767,
-        longitude: 45.023025,
-        areaId: 1,
+        latitude: -0.179685,
+        longitude: 51.660615,
         detail: 'address detail',
         postalCode: '45157',
       })
@@ -92,4 +92,24 @@ describe(' Issue number 10 ', () => {
       })
       .expect(204);
   });
+
+  it(' Customer got error on out of area location', async () => {
+    return agent(app.getHttpServer())
+      .post(`/addresses`)
+      .set('Authorization', `Bearer ${customerToken}`)
+      .send({
+        name: 'test address',
+        cityId: 1,
+        latitude: -10.179685,
+        longitude: 51.660615,
+        detail: 'address detail',
+        postalCode: '45157',
+      })
+      .expect(404)
+      .then((result) => {
+        const resultObject = JSON.parse(result.text);
+        expect(resultObject.meta.message).toEqual(addressErrorMessages.AREA_NOT_FOUND.message);
+      });
+  });
+
 });
