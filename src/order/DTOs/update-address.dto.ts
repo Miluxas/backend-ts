@@ -22,11 +22,6 @@ export class UpdateAddressBodyDto {
   @IsOptional()
   longitude: number;
 
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  @IsOptional()
-  areaId: number;
-
   @ApiProperty({ example: 'title' })
   @IsString()
   @IsOptional()

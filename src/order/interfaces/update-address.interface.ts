@@ -3,7 +3,6 @@ export interface IUpdateAddress {
   cityId?: number;
   latitude?: number;
   longitude?: number;
-  areaId?: number;
   detail?: string;
   postalCode?: string;
 }

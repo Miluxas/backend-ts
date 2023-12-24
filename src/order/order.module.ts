@@ -12,10 +12,15 @@ import { Country } from './entities/country.entity';
 import { Order } from './entities/order.entity';
 import { ShoppingCart } from './entities/shopping-cart.entity';
 import { State } from './entities/state.entity';
-import { orderErrorMessages, parcelErrorMessages } from './errors';
+import {
+  orderErrorMessages,
+  parcelErrorMessages,
+  addressErrorMessages,
+} from './errors';
 import { AddressService } from './services/address.service';
 import { OrderService } from './services/order.service';
 import { ShoppingCartService } from './services/shopping-cart.service';
+import { Area } from './entities/area.entity';
 
 @Module({
   imports: [
@@ -26,10 +31,12 @@ import { ShoppingCartService } from './services/shopping-cart.service';
       Country,
       State,
       City,
+      Area,
     ]),
     ErrorHandlerModule.register({
       ...orderErrorMessages,
       ...parcelErrorMessages,
+      ...addressErrorMessages,
     }),
     CatalogModule,
     InventoryModule,

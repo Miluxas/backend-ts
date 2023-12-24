@@ -12,5 +12,6 @@ export class Area extends BaseModel {
   @Column()
   cityId: number;
 
+  @Column({ type: 'text' })
+  polygon: string;
 }
-

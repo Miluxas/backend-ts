@@ -10,6 +10,8 @@ import { ICreateAddress } from '../interfaces';
 import { Country } from '../entities/country.entity';
 import { State } from '../entities/state.entity';
 import { City } from '../entities/city.entity';
+import { Area } from '../entities/area.entity';
+import { AddressError } from '../errors';
 
 @Injectable()
 export class AddressService {
@@ -18,6 +20,8 @@ export class AddressService {
     private readonly addressRepository: Repository<Address>,
     @InjectRepository(City)
     private readonly cityRepository: Repository<City>,
+    @InjectRepository(Area)
+    private readonly areaRepository: Repository<Area>,
     private readonly paginationService: PaginationService,
   ) {}
 
@@ -42,6 +46,17 @@ export class AddressService {
     address.countryName = city.countryName;
     address.stateId = city.stateId;
     address.stateName = city.stateName;
+    const area=await this.areaRepository.query(`SELECT * FROM area
+    WHERE ST_CONTAINS( ST_GEOMFROMTEXT(
+      concat(
+        'POLYGON((',
+        polygon,
+        '))')
+      ), POINT(${address.latitude}, ${address.longitude}))`)
+      if(!area[0]|| area[0].cityId!=address.cityId){
+        throw new Error(AddressError.AREA_NOT_FOUND);
+      }
+      address.areaId=area[0].id
     return this.addressRepository.save(address);
   }
 

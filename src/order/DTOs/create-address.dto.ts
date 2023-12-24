@@ -18,10 +18,6 @@ export class CreateAddressBodyDto {
   @IsNumber()
   longitude: number;
 
-  @ApiProperty({ example: 1 })
-  @IsNumber()
-  areaId: number;
-
   @ApiProperty({ example: 'title' })
   @IsString()
   detail: string;
