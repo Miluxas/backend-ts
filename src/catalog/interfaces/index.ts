@@ -10,6 +10,5 @@ export * from './updated-product.interface';
 export * from './new-variable-type.interface';
 export * from './updated-variable-type.interface';
 
-export * from './media.interface';
 export * from './sku.interface';
 

@@ -10,3 +10,4 @@ export * from './get-address-detail.dto';
 export * from './get-address-list.dto';
 export * from './update-address.dto';
 
+export * from './payment-redirect.dto';
