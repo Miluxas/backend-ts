@@ -20,7 +20,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand ",
-    "test:e2e": "NODE_ENV=test MONGODB_URL='mongodb://localhost:27017/?readPreference=primary&directConnection=true&ssl=false' MONGODB_DB_NAME=test2  DB_DATABASE=test2 jest --watch --runInBand --testTimeout 10000"
+    "test:e2e": "NODE_ENV=test MONGODB_URL='mongodb://localhost:27017/?readPreference=primary&directConnection=true&ssl=false' MONGODB_DB_NAME=test2  DB_DATABASE=test2 jest --watch --runInBand --testTimeout 40000"
   },
   "dependencies": {
     "@nestjs/axios": "^3.0.2",

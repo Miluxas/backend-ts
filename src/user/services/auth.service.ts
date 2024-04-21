@@ -41,6 +41,12 @@ export class AuthService {
         }
         if (await compare(loginInfo.password, user.password)) {
           const refreshTokenObject = this.generateRefreshToken(user);
+          await this.updateRefreshToken(
+            user.id,
+            refreshTokenObject.refreshToken,
+            refreshTokenObject.expiresAt,
+            refreshTokenObject.uid,
+          );
           const token = this.generateAccessToken(user, refreshTokenObject.uid);
           delete user.password;
           return {
@@ -54,6 +60,23 @@ export class AuthService {
       });
   }
 
+  private async updateRefreshToken(
+    userId: number,
+    refreshToken: string,
+    expiresAt: Date,
+    uid: string,
+  ) {
+    const hashedRefreshToken =await hash(refreshToken, 10);
+    let token = await this.refreshTokenRepository.findOneBy({ userId, uid });
+    if (!token) {
+      token = new RefreshToken();
+      token.userId = userId;
+      token.uid = uid;
+    }
+    token.token = hashedRefreshToken;
+    token.expiresAt = expiresAt;
+    return this.refreshTokenRepository.save(token);
+  }
   private generateAccessToken(
     user: User,
     uid: string,
@@ -185,29 +208,32 @@ export class AuthService {
   }
 
   async refreshToken(userId: number, refreshToken: string) {
-    const user = await this.userRepository.findOneBy({ id: userId });
-    if (!user) throw new Error(AuthError.UNAUTHORIZED);
-    const verifiedRefreshToken = this.verifyRefreshToken(refreshToken);
-    if (!verifiedRefreshToken) throw new Error(AuthError.UNAUTHORIZED);
+    try {
+      const user = await this.userRepository.findOneBy({ id: userId });
+      if (!user) throw new Error(AuthError.UNAUTHORIZED);
+      const verifiedRefreshToken = this.verifyRefreshToken(refreshToken);
+      if (!verifiedRefreshToken) throw new Error(AuthError.UNAUTHORIZED);
+      const userRefreshToken = await this.getRefreshToken(
+        user.id,
+        verifiedRefreshToken.uid,
+      );
+      if (!userRefreshToken) throw new Error(AuthError.UNAUTHORIZED);
 
-    const userRefreshToken = await this.getRefreshToken(
-      user.id,
-      verifiedRefreshToken.uid,
-    );
-    if (!userRefreshToken) throw new Error(AuthError.UNAUTHORIZED);
+      const isRefreshTokenValid = await this.validateRefreshToken(
+        user.id,
+        refreshToken,
+        verifiedRefreshToken.uid,
+      );
 
-    const isRefreshTokenValid = await this.validateRefreshToken(
-      user.id,
-      refreshToken,
-      verifiedRefreshToken.uid,
-    );
+      if (!isRefreshTokenValid) throw new Error(AuthError.UNAUTHORIZED);
 
-    if (!isRefreshTokenValid) throw new Error(AuthError.UNAUTHORIZED);
-
-    const accessToken = this.generateAccessToken(
-      user,
-      verifiedRefreshToken.uid,
-    );
-    return accessToken.token;
+      const accessToken = this.generateAccessToken(
+        user,
+        verifiedRefreshToken.uid,
+      );
+      return accessToken.token;
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

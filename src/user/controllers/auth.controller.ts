@@ -45,6 +45,7 @@ export class AuthController {
   }
 
   @UseGuards(RefreshTokenGuard)
+  @Public()
   @Get('/refresh')
   @ApiBearerAuth()
   refreshTokens(@Req() req) {
