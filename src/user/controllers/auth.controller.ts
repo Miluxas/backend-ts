@@ -1,5 +1,5 @@
-import { Body, Controller, Post, Put, Req } from '@nestjs/common';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { ErrorHandlerService } from '../../error-handler/error-handler.service';
 import { StandardResponseFactory } from '../../interceptors/formatter/standard-response.factory';
 import { ChangePasswordBodyDto, GetUserDetailResponseDto, LoginBodyDto } from '../DTOs';
@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { AuthorizedRequestType } from '../types/authorized-request.type';
 import { Public } from '../../common/public.decorator';
 import { Authorization } from '../../common/authorization.decorator';
+import { RefreshTokenGuard } from '../guards/refresh-token.quard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -41,5 +42,14 @@ export class AuthController {
     return this.authService
       .changePassword(req.user.id, body.oldPassword, body.newPassword)
       .catch((error) => this.errorHandlerService.getMessage(error));
+  }
+
+  @UseGuards(RefreshTokenGuard)
+  @Get('/refresh')
+  @ApiBearerAuth()
+  refreshTokens(@Req() req) {
+    const userId = req.user['sub'];
+    const refreshToken = req.user['refreshToken'];
+    return this.authService.refreshToken(userId, refreshToken);
   }
 }

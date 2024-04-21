@@ -23,7 +23,7 @@
     "test:e2e": "NODE_ENV=test MONGODB_URL='mongodb://localhost:27017/?readPreference=primary&directConnection=true&ssl=false' MONGODB_DB_NAME=test2  DB_DATABASE=test2 jest --watch --runInBand --testTimeout 10000"
   },
   "dependencies": {
-    "@nestjs/axios": "^3.0.1",
+    "@nestjs/axios": "^3.0.2",
     "@nestjs/cache-manager": "^2.1.0",
     "@nestjs/common": "^10.2.7",
     "@nestjs/config": "^3.1.1",

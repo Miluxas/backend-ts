@@ -26,6 +26,38 @@ let customerId
   });
 
   let customerToken;
+  let customerRefreshToken;
+  it(' Customer login', async () => {
+    return agent(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email: 'john.smith@test.com',
+        password:'123123'
+      })
+      .expect(201)
+      .then((result) => {
+        const resultObject = JSON.parse(result.text);
+        expect(resultObject.payload.user.password).toBeUndefined();
+        customerToken=resultObject.payload.token;
+        customerRefreshToken=resultObject.payload.refreshToken;
+      });
+  });
+
+  it(' Customer refresh token', async () => {
+    return agent(app.getHttpServer())
+      .get('/auth/refresh')
+      .set('Authorization', `Bearer ${customerRefreshToken}`)
+      .send({
+        email: 'john.smith@test.com',
+        password:'123123'
+      })
+      .expect(200)
+      .then((result) => {
+        const resultObject = JSON.parse(result.text);
+        expect(resultObject.payload).toBe(customerToken);
+      });
+  });
+
   it(' Customer login', async () => {
     return agent(app.getHttpServer())
       .post('/auth/login')

@@ -31,9 +31,6 @@ export class User extends BaseModel {
   @Column({ nullable: true, select: false })
   password?: string;
 
-  @Column({ nullable: true, select: false })
-  refreshToken?: string;
-
   @Column('simple-array')
   roles:Role[];
 }

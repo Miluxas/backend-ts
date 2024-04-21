@@ -7,6 +7,7 @@ export enum AuthError {
   INVALID_EMAIL = 'INVALID_EMAIL',
   EMAIL_IS_NOT_VERIFIED = 'EMAIL_IS_NOT_VERIFIED',
   WRONG_PASSWORD = 'WRONG_PASSWORD',
+  UNAUTHORIZED='UNAUTHORIZED',
 }
 
 export const authErrorMessages: IMessageList<AuthError> = {
@@ -30,5 +31,9 @@ export const authErrorMessages: IMessageList<AuthError> = {
   [AuthError.EMAIL_IS_NOT_VERIFIED]: {
     message: 'Email is not verified',
     status: HttpStatus.BAD_REQUEST,
+  },
+  [AuthError.UNAUTHORIZED]: {
+    message: 'Unauthorized',
+    status: HttpStatus.UNAUTHORIZED,
   },
 };
