@@ -3,7 +3,7 @@ import {
   GetObjectCommand,
   HeadObjectCommand,
   PutObjectCommand,
-  S3Client
+  S3Client,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Injectable } from '@nestjs/common';
@@ -14,7 +14,7 @@ import { join } from 'path';
 @Injectable()
 export class StorageService {
   private readonly s3Client: S3Client;
-
+  private readonly locationBaseUrl: string;
   constructor(private readonly configService: ConfigService) {
     this.s3Client = new S3Client({
       region: 'fra1',
@@ -24,6 +24,11 @@ export class StorageService {
         secretAccessKey: this.configService.get('S3_SECRET_ACCESS_KEY'),
       },
     });
+    const endPoint = this.configService.get('S3_ENDPOINT');
+    const parts = endPoint.split('//');
+    this.locationBaseUrl = `${parts[0]}//${this.configService.get(
+      'S3_BUCKET_NAME',
+    )}.${parts[1]}`;
   }
 
   public async uploadPublicFile(
@@ -32,7 +37,7 @@ export class StorageService {
     folder: string,
   ): Promise<any> {
     const FILE = join(localPath, filename);
-    return this.s3Client.send(
+    await this.s3Client.send(
       new PutObjectCommand({
         Bucket: this.configService.get('S3_BUCKET_NAME'),
         Key: `${folder}/${filename}`,
@@ -40,6 +45,9 @@ export class StorageService {
         ACL: 'public-read',
       }),
     );
+    return {
+      Location: `${this.locationBaseUrl}/${folder}/${filename}`,
+    };
   }
 
   public async uploadPrivateFile(
@@ -48,13 +56,18 @@ export class StorageService {
     folder: string,
   ): Promise<any> {
     const FILE = join(localPath, filename);
-    return this.s3Client.send(
+    await this.s3Client.send(
       new PutObjectCommand({
         Bucket: this.configService.get('S3_BUCKET_NAME'),
         Key: `${folder}/${filename}`,
         Body: readFileSync(FILE),
       }),
     );
+
+    return {
+      Location: `${this.locationBaseUrl}/${folder}/${filename}`,
+      key: `${folder}/${filename}`,
+    };
   }
 
   public async getDownloadLink(folder, filename) {
