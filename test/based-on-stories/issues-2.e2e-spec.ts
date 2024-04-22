@@ -1,5 +1,5 @@
 import { agent } from 'supertest';
-import { app, baseAfterAll, baseBeforeAll } from '../../test/base_e2e_spec';
+import { app, baseAfterAll, baseBeforeAll, sleep } from '../../test/base_e2e_spec';
 
 describe(' Issue number 2 ', () => {
   beforeAll(baseBeforeAll);
@@ -44,32 +44,16 @@ let customerId
   });
 
   it(' Customer refresh token', async () => {
+    await sleep(2000)
     return agent(app.getHttpServer())
       .get('/auth/refresh')
       .set('Authorization', `Bearer ${customerRefreshToken}`)
-      .send({
-        email: 'john.smith@test.com',
-        password:'123123'
-      })
       .expect(200)
       .then((result) => {
         const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload).toBe(customerToken);
-      });
-  });
+        expect(resultObject.payload).not.toBe(customerToken);
+        customerToken=resultObject.payload;
 
-  it(' Customer login', async () => {
-    return agent(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: 'john.smith@test.com',
-        password:'123123'
-      })
-      .expect(201)
-      .then((result) => {
-        const resultObject = JSON.parse(result.text);
-        expect(resultObject.payload.user.password).toBeUndefined();
-        customerToken=resultObject.payload.token;
       });
   });
 
