@@ -13,13 +13,17 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   constructor(private reflector: Reflector, private rBACService: RBACService) {
     super(reflector);
   }
-
+  exceptionUrlList=['/auth/refresh'];
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
     try {
+      if(this.exceptionUrlList.includes(context.switchToHttp().getRequest().url)){
+        return true;
+      }
+
       const baseGuardResult = await super.canActivate(context);
       if (!baseGuardResult) {
         throw new UnauthorizedException();
@@ -34,8 +38,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       if (!token) {
         throw new UnauthorizedException();
       }
-
       const { user, url, method } = context.switchToHttp().getRequest();
+
       const accessStatus = this.rBACService.checkAccess(
         user.roles,
         user.id,
